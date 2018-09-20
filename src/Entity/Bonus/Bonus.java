@@ -12,6 +12,7 @@ public abstract class Bonus extends EntityRect{
 	public static int BONUS_MORE_RANGE = 49;
 	public static int BONUS_MORE_SPEED = 50;
 	public static int BONUS_MORE_BOMB = 51;
+	public static int BONUS_DEATH = 52;
 
 	protected Bonus(int x, int y, int width, int height) {
 		super(x+width/4, y+height/4, width/2, height/2);
@@ -22,6 +23,7 @@ public abstract class Bonus extends EntityRect{
 		if(bonus_id == BONUS_MORE_RANGE) return new BonusMoreRange(x, y, width, height);
 		if(bonus_id == BONUS_MORE_SPEED) return new BonusMoreSpeed(x, y, width, height);
 		if(bonus_id == BONUS_MORE_BOMB) return new BonusMoreBomb(x, y, width, height);
+		if(bonus_id == BONUS_DEATH) return new BonusDeath(x, y, width, height);
 		throw new NoBonusExistsException("Bonus with id " + bonus_id + " not exists");
 	}
 

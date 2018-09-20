@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import App.GamePanel;
+import App.MapGenerator;
+import App.PlayingState;
 import Utils.Rectangle;
 
 public class Bomb extends Entity {
@@ -23,10 +25,10 @@ public class Bomb extends Entity {
 	
 	Bomb(int x, int y, int range) {
 		this.blockDistance = range;
-		caseX = (int) x/GamePanel.BLOCK_SIZE;
-		caseY = (int) y/GamePanel.BLOCK_SIZE;
-		this.x = caseX*GamePanel.BLOCK_SIZE + GamePanel.BLOCK_SIZE/4;
-		this.y = caseY*GamePanel.BLOCK_SIZE + GamePanel.BLOCK_SIZE/4;
+		caseX = (int) x/PlayingState.BLOCK_SIZE;
+		caseY = (int) y/PlayingState.BLOCK_SIZE;
+		this.x = caseX*PlayingState.BLOCK_SIZE + PlayingState.BLOCK_SIZE/4;
+		this.y = caseY*PlayingState.BLOCK_SIZE + PlayingState.BLOCK_SIZE/4;
 
 	}
 
@@ -94,20 +96,20 @@ public class Bomb extends Entity {
 			frameBeforeExplode--;
 			if(frameBeforeExplode == 0) {
 				explode = true;
-				GamePanel.instance().checkEmptyBlock(this);
-				GamePanel.instance().killPlayer(this);
+				MapGenerator.checkEmptyBlock(this);
+				PlayingState.instance().killPlayer(this);
 			}
 		}
 	}
 	
 	public Rectangle[] getExplosionCollisionRects() {
-		int sizeLeft = blockDistanceLeft*GamePanel.BLOCK_SIZE;
-		int sizeRight = blockDistanceRight*GamePanel.BLOCK_SIZE;
-		int sizeUp = blockDistanceUp*GamePanel.BLOCK_SIZE;
-		int sizeDown = blockDistanceDown*GamePanel.BLOCK_SIZE;
+		int sizeLeft = blockDistanceLeft*PlayingState.BLOCK_SIZE;
+		int sizeRight = blockDistanceRight*PlayingState.BLOCK_SIZE;
+		int sizeUp = blockDistanceUp*PlayingState.BLOCK_SIZE;
+		int sizeDown = blockDistanceDown*PlayingState.BLOCK_SIZE;
 		Rectangle[] rects = {
-				new Rectangle(x-GamePanel.BLOCK_SIZE/4-sizeLeft, y-GamePanel.BLOCK_SIZE/4, GamePanel.BLOCK_SIZE+sizeLeft+sizeRight, GamePanel.BLOCK_SIZE),
-				new Rectangle(x-GamePanel.BLOCK_SIZE/4, y-GamePanel.BLOCK_SIZE/4-sizeUp, GamePanel.BLOCK_SIZE, GamePanel.BLOCK_SIZE+sizeUp+sizeDown)
+				new Rectangle(x-PlayingState.BLOCK_SIZE/4-sizeLeft, y-PlayingState.BLOCK_SIZE/4, PlayingState.BLOCK_SIZE+sizeLeft+sizeRight, PlayingState.BLOCK_SIZE),
+				new Rectangle(x-PlayingState.BLOCK_SIZE/4, y-PlayingState.BLOCK_SIZE/4-sizeUp, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE+sizeUp+sizeDown)
 		};
 		return rects;
 	}
