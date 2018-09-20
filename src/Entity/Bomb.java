@@ -1,6 +1,10 @@
+package Entity;
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
+
+import App.GamePanel;
+import Utils.Rectangle;
 
 public class Bomb extends Entity {
 

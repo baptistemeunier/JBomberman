@@ -1,3 +1,5 @@
+package App;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,7 +9,16 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import Entity.Block;
+import Entity.EntityRect;
+import Entity.Player;
+import Entity.Bonus.Bonus;
+import Entity.Bomb;
+import Utils.Rectangle;
+
 public class GamePanel extends JPanel implements Runnable, KeyListener {
+
+	private static final long serialVersionUID = -6496354673243986202L;
 
 	public static int WIDTH = 1020;
 	public static int HEIGHT = 720;
@@ -50,7 +61,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		try {
 			createBackground();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			thread.interrupt();
 			
@@ -266,8 +276,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		int caseX = bomb.getCaseX();
 		int caseY = bomb.getCaseY();
 		int deep = bomb.getBlockDistance() + 1;
-
-		int nbBlock = caseX + caseY * NB_BLOCK_X;
 
 		int i = 1;
 		boolean blocked = false;

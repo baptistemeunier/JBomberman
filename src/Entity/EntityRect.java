@@ -1,10 +1,13 @@
+package Entity;
 
 import java.awt.Graphics;
 
+import Utils.Rectangle;
+
 public class EntityRect extends Entity {
 	
-	int width;
-	int height;
+	protected int width;
+	protected int height;
 
 	public EntityRect(int x, int y, int width, int height) {
 		this.x = x;

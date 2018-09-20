@@ -1,5 +1,9 @@
+package Entity.Bonus;
+
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Entity.Player;
 
 public class BonusMoreRange extends Bonus {
 

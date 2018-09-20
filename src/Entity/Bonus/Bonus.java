@@ -1,5 +1,10 @@
+package Entity.Bonus;
+
 import java.awt.Color;
 import java.awt.Graphics;
+import Entity.EntityRect;
+import Entity.Player;
+import Exception.NoBonusExistsException;
 
 public abstract class Bonus extends EntityRect{
 

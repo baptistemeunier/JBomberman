@@ -1,8 +1,11 @@
+package Entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import App.GamePanel;
 
 public class Player extends EntityRect {
 

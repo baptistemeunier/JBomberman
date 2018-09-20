@@ -1,6 +1,10 @@
+package Entity;
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
+
+import Entity.Bonus.Bonus;
+import Exception.NoBonusExistsException;
 
 public class Block extends EntityRect {
 

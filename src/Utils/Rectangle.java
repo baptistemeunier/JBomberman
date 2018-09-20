@@ -1,3 +1,4 @@
+package Utils;
 
 public class Rectangle {
 	public int x;

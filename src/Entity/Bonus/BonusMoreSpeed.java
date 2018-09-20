@@ -1,19 +1,24 @@
+package Entity.Bonus;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class BonusMoreBomb extends Bonus {
+import Entity.Player;
 
-	protected BonusMoreBomb(int x, int y, int width, int height) {
+public class BonusMoreSpeed extends Bonus {
+	
+	protected BonusMoreSpeed(int x, int y, int width, int height) {
 		super(x, y, width, height);
 	}
 
 	public void updatePlayer(Player player) {
-		player.addBomb();
+		player.addSpeed();
 	}
 
 	public void draw(Graphics g) {
 		drawBasic(g);
 		g.setColor(Color.BLACK);
-		g.drawString("B", x+10, y+15);
+		g.drawString("S", x+10, y+15);
 	}
+
 }
