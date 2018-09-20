@@ -7,7 +7,7 @@ import Entity.Player;
 
 public class BonusDeath extends Bonus {
 	
-	protected BonusDeath(int x, int y, int width, int height) {
+	public BonusDeath(int x, int y, int width, int height) {
 		super(x, y, width, height);
 	}
 

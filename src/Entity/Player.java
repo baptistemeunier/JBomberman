@@ -29,7 +29,6 @@ public class Player extends EntityRect {
 		super(x, y, 30, 30);
 		bombs = new ArrayList<Bomb>();
 		this.name = name;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setLeft(boolean left) {

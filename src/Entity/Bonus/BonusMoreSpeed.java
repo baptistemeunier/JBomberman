@@ -7,7 +7,7 @@ import Entity.Player;
 
 public class BonusMoreSpeed extends Bonus {
 	
-	protected BonusMoreSpeed(int x, int y, int width, int height) {
+	public BonusMoreSpeed(int x, int y, int width, int height) {
 		super(x, y, width, height);
 	}
 

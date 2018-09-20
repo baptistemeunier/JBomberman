@@ -7,7 +7,7 @@ import Entity.Player;
 
 public class BonusMoreRange extends Bonus {
 
-	protected BonusMoreRange(int x, int y, int width, int height) {
+	public BonusMoreRange(int x, int y, int width, int height) {
 		super(x ,y, width, height);
 	}
 

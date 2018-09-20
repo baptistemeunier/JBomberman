@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Entity.Bonus.Bonus;
-import Exception.NoBonusExistsException;
 
 public class Block extends EntityRect {
 
@@ -13,12 +12,11 @@ public class Block extends EntityRect {
 	public static int TYPE_EMPTY = 48;
 	private int type;
 
-	private Bonus bonus;
+	private Bonus bonus = null;
 
-	public Block(int x, int y, int width, int height, int type, int bonus) throws NoBonusExistsException {
+	public Block(int x, int y, int width, int height, int type) {
 		super(x, y, width, height);
 		this.type = type;
-		this.bonus = Bonus.generateBonus(bonus, x, y, width, height);
 	}
 	
 	public void draw(Graphics g) {
@@ -39,6 +37,10 @@ public class Block extends EntityRect {
 		return type;
 	}
 
+	public void setBonus(Bonus bonus) {
+		this.bonus = bonus;
+	}
+	
 	public void destroy() {
 		this.type = TYPE_EMPTY;
 	}
