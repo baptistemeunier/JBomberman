@@ -13,10 +13,7 @@ import Utils.Rectangle;
 public class PlayingState extends GameState {
 
 	public static int BLOCK_SIZE = 50;
-	
-	public static int NB_BLOCK_X = 19;
-	public static int NB_BLOCK_Y = 13;
-	
+		
 	ArrayList<Player> players;
 
 	private static PlayingState instance;

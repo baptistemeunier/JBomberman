@@ -14,30 +14,55 @@ import Utils.Rectangle;
 public class MapGenerator {
 
 	private static ArrayList<Block> blocks;
+	public static int NB_BLOCK_X = 19;
+	public static int NB_BLOCK_Y = 13;
 
 	public static ArrayList<Block> generateMap() throws Exception {
 		blocks = new ArrayList<Block>();
 
-		// Create layout
-		ArrayList<Block> bonusBlockList = new ArrayList<Block>();
-		String game = "1111111111111111111\n1000000000000000001\n1010101010101010101\n1002222222222222001\n1012121212121212101\n1002222222222222001\n1012121212121212101\n1002222222222222001\n1012121212121212101\n1002222222222222001\n1010101010101010101\n1000000000000000001\n1111111111111111111";
+		ArrayList<Block> blocksEmpty = generateLayout();
+		ArrayList<Block> blocksBonus = generateWall(blocksEmpty);
+		generateBonus(blocksBonus);
+		
+		return blocks;
+	}
+
+	private static ArrayList<Block> generateLayout() {
+		ArrayList<Block> blocksEmpty = new ArrayList<Block>();
+		
+		String game = "1111111111111111111\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1111111111111111111";
 		String[] lines = game.split("\n");
 		for (int y = 0; y < lines.length;y++) {
 			for (int x = 0; x < lines[y].length();x++) {
 				int type = (int) lines[y].charAt(x);
 				Block block = new Block(x*PlayingState.BLOCK_SIZE, y*PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, type);
 				blocks.add(block);
-				if(type == Block.TYPE_WALL) {
-					bonusBlockList.add(block);
+				if(type == Block.TYPE_EMPTY) {
+					blocksEmpty.add(block);
 				}
 			}
 		}
-		generateBonus(bonusBlockList);
-		
-		return blocks;
+		return blocksEmpty;
 	}
 
+	private static ArrayList<Block> generateWall(ArrayList<Block> blocksEmpty) {
+		ArrayList<Block> blocksBonus = new ArrayList<Block>();
+		removeBlockSpawn(blocksEmpty);	// Remove block at spawn to avoid player spawn problem
+		int emptySize = blocksEmpty.size();
+		while(blocksEmpty.size() > emptySize*0.4) {
+			int index = (int) Math.floor(Math.random() * blocksEmpty.size());
+			Block b = blocksEmpty.get(index);
+			b.setType(Block.TYPE_WALL);
+			blocksBonus.add(b);
+			blocksEmpty.remove(index);
+		}		
+		return blocksBonus;
+	}
+	
 	private static void generateBonus(ArrayList<Block> blockList) {
+		// Probability of bonus spawn
+		// 3%  => Kill // 17%  => Range // 10%  => Bomb	// 10% => Speed	// 60% => Nothing
+		
 		Iterator<Block> it = blockList.iterator();
 		while(it.hasNext()) {
 			double p = Math.random();
@@ -52,14 +77,20 @@ public class MapGenerator {
 				b.setBonus(new BonusMoreBomb(b.getX(), b.getY(), b.getWidth(), b.getHeight()));				
 			}
 		}
-		// Probability of bonus spawn
-		// 3%  => Kill
-		// 17%  => Range
-		// 10%  => Bomb
-		// 10% => Speed
-		// 60% => Nothing
 		
 	}
+
+	private static ArrayList<Block> removeBlockSpawn(ArrayList<Block> blocksEmpty) {
+		blocksEmpty.remove(0);
+		blocksEmpty.remove(0);
+		blocksEmpty.remove(NB_BLOCK_X-4);
+		blocksEmpty.remove(blocksEmpty.size()-NB_BLOCK_X+1);
+		blocksEmpty.remove(blocksEmpty.size()-1);
+		blocksEmpty.remove(blocksEmpty.size()-1);
+		return blocksEmpty;
+	}
+
+	///////////////////////// NOT REFACTORED //////////////////
 
 	public static boolean checkBlockCollision(Rectangle playerCollision) {
 		
@@ -79,7 +110,8 @@ public class MapGenerator {
 		}
 		return false;
 	}
-	
+
+		
 	public static void checkBlockBonus(Player player) {
 		Rectangle playerCollision = player.getCollisionBox();
 		Iterator<Block> it = blocks.iterator();
@@ -108,7 +140,7 @@ public class MapGenerator {
 		int i = 1;
 		boolean blocked = false;
 		while(i < deep && !blocked) {
-			int nbBlockTest = caseX-i + caseY * PlayingState.NB_BLOCK_X;
+			int nbBlockTest = caseX-i + caseY * NB_BLOCK_X;
 			if(caseX-i < 0) {
 				blocked = true;
 				i--;
@@ -129,7 +161,7 @@ public class MapGenerator {
 		i = 1;
 		blocked = false;
 		while(i != deep && !blocked) {
-			int nbBlockTest = caseX+i + caseY * PlayingState.NB_BLOCK_X;
+			int nbBlockTest = caseX+i + caseY * NB_BLOCK_X;
 			if(caseX+i < 0) {
 				blocked = true;
 				i--;
@@ -150,7 +182,7 @@ public class MapGenerator {
 		i = 1;
 		blocked = false;
 		while(i != deep && !blocked) {
-			int nbBlockTest = caseX + (caseY-i) * PlayingState.NB_BLOCK_X;
+			int nbBlockTest = caseX + (caseY-i) * NB_BLOCK_X;
 			if(caseY-i < 0) {
 				blocked = true;
 				i--;
@@ -171,7 +203,7 @@ public class MapGenerator {
 		i = 1;
 		blocked = false;
 		while(i != deep && !blocked) {
-			int nbBlockTest = caseX + (caseY+i) * PlayingState.NB_BLOCK_X;
+			int nbBlockTest = caseX + (caseY+i) * NB_BLOCK_X;
 			if(caseY+i < 0) {
 				blocked = true;
 				i--;

@@ -52,5 +52,9 @@ public class Block extends EntityRect {
 	public void removeBonus() {
 		this.bonus = null;
 	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 	
 }
