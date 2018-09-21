@@ -28,9 +28,8 @@ public class Block extends EntityRect {
 			g.setColor(Color.WHITE);
 		}
 		g.fillRect(this.x, this.y, this.width, this.height);
-		if(type == TYPE_EMPTY) {
-			if(bonus != null) bonus.draw(g);
-		}
+		if(type == TYPE_EMPTY && bonus != null)
+			bonus.draw(g);
 	}
 
 	public int getType() {

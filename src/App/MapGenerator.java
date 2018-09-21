@@ -14,19 +14,23 @@ import Utils.Rectangle;
 public class MapGenerator {
 
 	private static ArrayList<Block> blocks;
+	private static ArrayList<Bomb> bombs;
+
 	public static int NB_BLOCK_X = 19;
 	public static int NB_BLOCK_Y = 13;
 
+	
 	public static ArrayList<Block> generateMap() throws Exception {
 		blocks = new ArrayList<Block>();
-
+		bombs = new ArrayList<Bomb>();
+		
 		ArrayList<Block> blocksEmpty = generateLayout();
 		ArrayList<Block> blocksBonus = generateWall(blocksEmpty);
 		generateBonus(blocksBonus);
 		
 		return blocks;
 	}
-
+	
 	private static ArrayList<Block> generateLayout() {
 		ArrayList<Block> blocksEmpty = new ArrayList<Block>();
 		
@@ -90,8 +94,6 @@ public class MapGenerator {
 		return blocksEmpty;
 	}
 
-	///////////////////////// NOT REFACTORED //////////////////
-
 	public static Block checkBlockCollision(Rectangle playerCollision) {	
 		Iterator<Block> it = blocks.iterator();
 		while(it.hasNext()) {
@@ -99,10 +101,53 @@ public class MapGenerator {
 			if(b.getType() != Block.TYPE_EMPTY & b.getCollisionBox().checkCollision(playerCollision)) {
 				return b;
 			}
-		}
+		}/*
+		Iterator<Bomb> itBomb = bombs.iterator();
+		while(itBomb.hasNext()) {
+			Bomb bomb = itBomb.next();
+			Block block = getBlock(bomb.getCaseX(), bomb.getCaseY());
+			if(block.getCollisionBox().checkCollision(playerCollision)) {
+				return block;
+			}
+		}*/
 		return null;
 	}
 		
+	public static void addBomb(int x, int y, Player player) {
+		Bomb bomb = new Bomb(x, y, player);
+		bombs.add(bomb);
+	}
+	
+	public static Block getBlock(int x, int y) {
+		return blocks.get(x + y*NB_BLOCK_X);
+	}
+
+	public static Bomb getBomb(int x, int y) {
+		Iterator<Bomb> it = bombs.iterator();
+		while(it.hasNext()) {
+			Bomb bomb = it.next();
+			if(x == bomb.getCaseX() && y == bomb.getCaseY()) {
+				return bomb;
+			}
+		}
+		return null;
+	}
+
+	public static void update() {
+		Iterator<Bomb> it = bombs.iterator();
+		while(it.hasNext()) {
+			Bomb bomb = it.next();
+			bomb.update();
+			if(bomb.isExplode()) {
+				PlayingState.instance().killPlayer(bomb);					
+			}
+			if(bomb.needToBeRemove()) {
+				bomb.getPlayer().addBomb();
+				it.remove();
+			}
+		}		
+	}
+
 	public static void checkBlockBonus(Player player) {
 		Rectangle playerCollision = player.getCollisionBox();
 		Iterator<Block> it = blocks.iterator();
@@ -216,5 +261,11 @@ public class MapGenerator {
 		while(it.hasNext()) {
 			it.next().draw(g);
 		}
+
+		Iterator<Bomb> itBomb = bombs.iterator();
+		while(itBomb.hasNext()) {
+			itBomb.next().draw(g);
+		}
+		
 	}
 }

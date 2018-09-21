@@ -35,7 +35,6 @@ public class PlayingState extends GameState {
 			MapGenerator.generateMap();
 		} catch (Exception e) {
 			e.printStackTrace();
-			//thread.interrupt();			
 		}
 	}
 
@@ -72,24 +71,11 @@ public class PlayingState extends GameState {
 				playerName = p.getName();
 			}
 		}	
+		MapGenerator.update();
 		// Update Bomb
 		// Check Bomb collision with player
 		// Check Bonus collision with player
 		
-		it = players.iterator();
-		while(it.hasNext()) {
-			Player p = it.next();
-			if(p.isAlive()) {
-				Iterator<Bomb> itBombs;
-				itBombs = p.getBombs().iterator();
-				while(itBombs.hasNext()) {
-					Bomb b = itBombs.next();
-					if(b.isExplode()) {
-						killPlayer(b);						
-					}
-				}
-			}
-		}		
 		if(nb_left <= 1) {
 			EndingState.instance().setWinnerName(playerName);
 			GameManager.instance().setState(EndingState.instance());

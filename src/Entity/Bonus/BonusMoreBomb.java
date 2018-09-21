@@ -12,7 +12,7 @@ public class BonusMoreBomb extends Bonus {
 	}
 	
 	public void updatePlayer(Player player) {
-		player.addBomb();
+		player.addBombSlot();
 	}
 
 	public void draw(Graphics g) {
