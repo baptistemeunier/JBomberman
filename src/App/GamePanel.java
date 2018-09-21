@@ -18,8 +18,6 @@ public class GamePanel extends JPanel implements Runnable {
 	private BufferedImage image;
 	private Graphics2D g;
 
-	private GameManager gm;
-
 	private double averageFPS;
 	private int frame;
 	public static int FPS = 30;
@@ -51,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
 		running = true;
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
-		gm = new GameManager();
-		gm.pushState(PlayingState.instance());
+		//GameManager.instance().pushState(EndingState.instance());
+		GameManager.instance().pushState(PlayingState.instance());
 		
 		long startTime;
 		long URDTimeMillis;
@@ -92,14 +90,14 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	private void gameUpdate() {
-		gm.currentState().update();
+		GameManager.instance().currentState().update();
 	}
 
 	private void gameRender() {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		gm.currentState().draw(g);
+		GameManager.instance().currentState().draw(g);
 		g.setColor(Color.red);
 		g.drawString("Frame : " + frame, 20, HEIGHT-10);
 		g.drawString("FPS : " + (int) averageFPS, 20, HEIGHT-20);

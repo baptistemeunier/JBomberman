@@ -23,7 +23,7 @@ public class Player extends EntityRect {
 
 	private ArrayList<Bomb> bombs;
 	private String name;
-	private boolean dead = false;
+	private boolean alive = true;
 
 	public Player(String name, int x, int y) {
 		super(x, y, 30, 30);
@@ -48,13 +48,13 @@ public class Player extends EntityRect {
 	}
 
 	public void dropBomb() {
-		if(!this.dead && bombs.size() != maxBomb) {			
+		if(this.alive && bombs.size() != maxBomb) {			
 			bombs.add(new Bomb(x, y, range));
 		}
 	}
 	
 	public void update() {
-		if(!this.dead) {
+		if(this.alive) {
 			if(left) {
 				dx = -speed;
 			}
@@ -99,7 +99,7 @@ public class Player extends EntityRect {
 	}
 	
 	public void draw(Graphics2D g) {
-		if(!this.dead) {
+		if(this.alive) {
 			g.setColor(Color.BLUE);
 			g.fillRect(this.x, this.y, this.width, this.height);
 			g.setColor(Color.RED);
@@ -130,7 +130,11 @@ public class Player extends EntityRect {
 	}
 
 	public void kill() {
-		this.dead = true;
+		this.alive = false;
+	}
+
+	public boolean isAlive() {
+		return this.alive;
 	}
 
 }

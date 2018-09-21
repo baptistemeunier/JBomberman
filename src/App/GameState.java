@@ -11,7 +11,6 @@ public abstract class GameState implements KeyListener {
     protected abstract void pause();
     protected abstract void resume();
 
-    protected abstract void handleEvent();
     protected abstract void update();
     protected abstract void draw(Graphics2D g);
     

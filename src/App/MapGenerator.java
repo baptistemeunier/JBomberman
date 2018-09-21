@@ -52,7 +52,7 @@ public class MapGenerator {
 				b.setBonus(new BonusMoreBomb(b.getX(), b.getY(), b.getWidth(), b.getHeight()));				
 			}
 		}
-		// Probobility of bonus spawn
+		// Probability of bonus spawn
 		// 3%  => Kill
 		// 17%  => Range
 		// 10%  => Bomb

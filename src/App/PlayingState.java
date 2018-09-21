@@ -6,9 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import Entity.Block;
 import Entity.Bomb;
-import Entity.EntityRect;
 import Entity.Player;
 import Utils.Rectangle;
 
@@ -18,9 +16,7 @@ public class PlayingState extends GameState {
 	
 	public static int NB_BLOCK_X = 19;
 	public static int NB_BLOCK_Y = 13;
-
-	ArrayList<EntityRect> elements;
-	ArrayList<Block> blocks;
+	
 	ArrayList<Player> players;
 
 	private static PlayingState instance;
@@ -28,6 +24,11 @@ public class PlayingState extends GameState {
 		if(instance == null) {
 			PlayingState.instance = new PlayingState();
 		}
+		return PlayingState.instance;
+	}
+
+	public static PlayingState resetInstance() {
+		PlayingState.instance = new PlayingState();
 		return PlayingState.instance;
 	}
 
@@ -48,7 +49,7 @@ public class PlayingState extends GameState {
 	@Override
 	protected void release() {
 		// TODO Auto-generated method stub
-
+		players = null;
 	}
 
 	@Override
@@ -64,22 +65,26 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	protected void handleEvent() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected void update() {
 		Iterator<Player> it = players.iterator();
+		int nb_left = 0;
+		String playerName = null;
 		while(it.hasNext()) {
-			it.next().update();
+			Player p = it.next();
+			p.update();
+			if(p.isAlive()) {
+				nb_left++;
+				playerName = p.getName();
+			}
+		}
+		if(nb_left <= 1) {
+			EndingState.instance().setWinnerName(playerName);
+			GameManager.instance().setState(EndingState.instance());
 		}
 	}
 
 	@Override
 	protected void draw(Graphics2D g) {
-
 		MapGenerator.draw(g);
 		Iterator<Player> playersIt = players.iterator();
 		while(playersIt.hasNext()) {
@@ -93,7 +98,7 @@ public class PlayingState extends GameState {
 				g.drawRect(i*50, j*50, 50,50);
 			}
 		}
-
+		
 	}
 
 	public void killPlayer(Bomb bomb) {
@@ -108,7 +113,6 @@ public class PlayingState extends GameState {
 						rect1.x + rect1.width > rect2.x &&
 						rect1.y < rect2.y + rect2.height &&
 						rect1.height + rect1.y > rect2.y) {
-						   System.out.println(player.getName() + " is a looser !");
 						   player.kill();
 				}
 			}
