@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import Entity.Bonus.Bonus;
 
 public class Block extends EntityRect {
-
+	
 	public static int TYPE_SOLID = 49;
 	public static int TYPE_WALL = 50;
 	public static int TYPE_EMPTY = 48;
@@ -40,7 +40,7 @@ public class Block extends EntityRect {
 	public void setBonus(Bonus bonus) {
 		this.bonus = bonus;
 	}
-	
+
 	public void destroy() {
 		this.type = TYPE_EMPTY;
 	}

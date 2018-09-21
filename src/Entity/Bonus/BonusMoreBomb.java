@@ -10,7 +10,7 @@ public class BonusMoreBomb extends Bonus {
 	public BonusMoreBomb(int x, int y, int width, int height) {
 		super(x, y, width, height);
 	}
-
+	
 	public void updatePlayer(Player player) {
 		player.addBomb();
 	}

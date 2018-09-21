@@ -1,5 +1,6 @@
 package App;
 
+import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -13,7 +14,7 @@ import Utils.Rectangle;
 public class PlayingState extends GameState {
 
 	public static int BLOCK_SIZE = 50;
-		
+
 	ArrayList<Player> players;
 
 	private static PlayingState instance;
@@ -24,16 +25,11 @@ public class PlayingState extends GameState {
 		return PlayingState.instance;
 	}
 
-	public static PlayingState resetInstance() {
-		PlayingState.instance = new PlayingState();
-		return PlayingState.instance;
-	}
-
 	@Override
 	protected void initialize() {
 		players = new ArrayList<Player>();
-		players.add(new Player("Player 1", 50, 50)); 
-		players.add(new Player("Player 2", 50*17, 50*11));
+		players.add(new Player("Player 1", BLOCK_SIZE + BLOCK_SIZE/4, BLOCK_SIZE + BLOCK_SIZE/4));
+		players.add(new Player("Player 2", BLOCK_SIZE*(MapGenerator.NB_BLOCK_X-2) + BLOCK_SIZE/4, BLOCK_SIZE*(MapGenerator.NB_BLOCK_Y-2) + BLOCK_SIZE/4));
 		
 		try {
 			MapGenerator.generateMap();
@@ -63,9 +59,11 @@ public class PlayingState extends GameState {
 
 	@Override
 	protected void update() {
+		// Move player
 		Iterator<Player> it = players.iterator();
 		int nb_left = 0;
 		String playerName = null;
+
 		while(it.hasNext()) {
 			Player p = it.next();
 			p.update();
@@ -73,7 +71,25 @@ public class PlayingState extends GameState {
 				nb_left++;
 				playerName = p.getName();
 			}
-		}
+		}	
+		// Update Bomb
+		// Check Bomb collision with player
+		// Check Bonus collision with player
+		
+		it = players.iterator();
+		while(it.hasNext()) {
+			Player p = it.next();
+			if(p.isAlive()) {
+				Iterator<Bomb> itBombs;
+				itBombs = p.getBombs().iterator();
+				while(itBombs.hasNext()) {
+					Bomb b = itBombs.next();
+					if(b.isExplode()) {
+						killPlayer(b);						
+					}
+				}
+			}
+		}		
 		if(nb_left <= 1) {
 			EndingState.instance().setWinnerName(playerName);
 			GameManager.instance().setState(EndingState.instance());
@@ -83,6 +99,7 @@ public class PlayingState extends GameState {
 	@Override
 	protected void draw(Graphics2D g) {
 		MapGenerator.draw(g);
+		
 		Iterator<Player> playersIt = players.iterator();
 		while(playersIt.hasNext()) {
 			playersIt.next().draw(g);
@@ -103,87 +120,32 @@ public class PlayingState extends GameState {
 		Iterator<Player> it = players.iterator();
 		while(it.hasNext()) {
 			Player player = it.next();
-			Rectangle rect2 = player.getCollisionBox();
 			for(int i = 0; i < rects.length; i++) {
-				Rectangle rect1 = rects[i];
-				if(rect1.x < rect2.x + rect2.width &&
-						rect1.x + rect1.width > rect2.x &&
-						rect1.y < rect2.y + rect2.height &&
-						rect1.height + rect1.y > rect2.y) {
-						   player.kill();
+				if(rects[i].checkCollision(player.getCollisionBox())) {
+					player.kill();
 				}
 			}
 		}
 	}
 
 	@Override
-	public void keyPressed(KeyEvent key) {
-		int keyCode = key.getKeyCode();
-		if(keyCode == KeyEvent.VK_LEFT)  {
-			players.get(0).setLeft(true);
+	protected void handleEvent(AWTEvent event) {
+		if(event.getID() == KeyEvent.KEY_RELEASED) {
+			int keyCode = ((KeyEvent) event).getKeyCode();
+			System.out.println("KEY_RELEASED :" + keyCode);
+		} else if(event.getID() == KeyEvent.KEY_PRESSED) {
+			int keyCode = ((KeyEvent) event).getKeyCode();
+			System.out.println("KEY_PRESSED :" + keyCode);			
+		} else if(event.getID() == KeyEvent.KEY_TYPED) {
+			int keyCode = ((KeyEvent) event).getKeyCode();
+			System.out.println("KEY_TYPED :" + keyCode);			
+		} else {
+			System.out.println("INCONNU");
 		}
-		if(keyCode == KeyEvent.VK_RIGHT)  {
-			players.get(0).setRight(true);
-		}
-		if(keyCode == KeyEvent.VK_UP)  {
-			players.get(0).setUp(true);
-		}
-		if(keyCode == KeyEvent.VK_DOWN)  {
-			players.get(0).setDown(true);
-		}
-		if(keyCode == KeyEvent.VK_SPACE)  {
-			players.get(0).dropBomb();
-		}
-		if(keyCode == KeyEvent.VK_Q)  {
-			players.get(1).setLeft(true);
-		}
-		if(keyCode == KeyEvent.VK_D)  {
-			players.get(1).setRight(true);
-		}
-		if(keyCode == KeyEvent.VK_Z)  {
-			players.get(1).setUp(true);
-		}
-		if(keyCode == KeyEvent.VK_S)  {
-			players.get(1).setDown(true);
-		}
-		if(keyCode == KeyEvent.VK_A)  {
-			players.get(1).dropBomb();
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent key) {
-		int keyCode = key.getKeyCode();
-		if(keyCode == KeyEvent.VK_LEFT)  {
-			players.get(0).setLeft(false);
-		}
-		if(keyCode == KeyEvent.VK_RIGHT)  {
-			players.get(0).setRight(false);
-		}
-		if(keyCode == KeyEvent.VK_UP)  {
-			players.get(0).setUp(false);
-		}
-		if(keyCode == KeyEvent.VK_DOWN)  {
-			players.get(0).setDown(false);
-		}
-		if(keyCode == KeyEvent.VK_Q)  {
-			players.get(1).setLeft(false);
-		}
-		if(keyCode == KeyEvent.VK_D)  {
-			players.get(1).setRight(false);
-		}
-		if(keyCode == KeyEvent.VK_Z)  {
-			players.get(1).setUp(false);
-		}
-		if(keyCode == KeyEvent.VK_S)  {
-			players.get(1).setDown(false);
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
+		Iterator<Player> playersIt = players.iterator();
+		while(playersIt.hasNext()) {
+			playersIt.next().handleEvent(event);
+		}		
 	}
-
 }

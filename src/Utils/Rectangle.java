@@ -13,5 +13,13 @@ public class Rectangle {
 		this.height = height;
 	}
 	
-	
+	public boolean checkCollision(Rectangle rect1) {
+		if(rect1.x < x + width &&
+				rect1.x + rect1.width > x &&
+				rect1.y < y + height &&
+				rect1.height + rect1.y > y) {
+				   return true;
+		}
+		return false;
+	}
 }

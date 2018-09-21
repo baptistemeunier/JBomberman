@@ -1,5 +1,6 @@
 package App;
 
+import java.awt.AWTEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -61,7 +62,7 @@ public class EndingState extends GameState {
 			} else if (choice == 2) {
 				System.exit(0);
 			}else { // choice == 0
-				GameManager.instance().setState(PlayingState.resetInstance());
+				GameManager.instance().setState(PlayingState.instance());
 			}
 			choice = -1;
 		}
@@ -103,40 +104,33 @@ public class EndingState extends GameState {
 
 	}
 
-	@Override
-	public void keyPressed(KeyEvent key) {
-		// TODO Auto-generated method stub
-		int keyCode = key.getKeyCode();
-		if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_Q)  {
-			currentChoice--;
-			if(currentChoice < 0) {
-				currentChoice = menuSelection.size()-1;
-			}
-		}
-		else if(keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D)  {
-			currentChoice++;
-			if(currentChoice == menuSelection.size()) {
-				currentChoice = 0;
-			}
-		}
-		else if(keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_ENTER)  {
-			choice = currentChoice;
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		
-	}
-
 	public void setWinnerName(String name) {
 		winner = name;
 	}
 
+	@Override
+	protected void handleEvent(AWTEvent event) {
+		if(event.getID() == KeyEvent.KEY_PRESSED) {
+			int keyCode = ((KeyEvent) event).getKeyCode();
+			if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_Q)  {
+				currentChoice--;
+				if(currentChoice < 0) {
+					currentChoice = menuSelection.size()-1;
+				}
+			}
+			else if(keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D)  {
+				currentChoice++;
+				if(currentChoice == menuSelection.size()) {
+					currentChoice = 0;
+				}
+			}
+		}
+		if(event.getID() == KeyEvent.KEY_RELEASED) {
+			int keyCode = ((KeyEvent) event).getKeyCode();
+			if(keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_ENTER)  {
+				choice = currentChoice;
+			}
+		}		
+	}
 
 }

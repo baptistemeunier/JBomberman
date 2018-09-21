@@ -13,7 +13,5 @@ public class Application {
 		window.setVisible(true);
 		window.pack();
 	}
-
-	
 	
 }

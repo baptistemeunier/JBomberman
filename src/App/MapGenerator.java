@@ -92,25 +92,16 @@ public class MapGenerator {
 
 	///////////////////////// NOT REFACTORED //////////////////
 
-	public static boolean checkBlockCollision(Rectangle playerCollision) {
-		
+	public static Block checkBlockCollision(Rectangle playerCollision) {	
 		Iterator<Block> it = blocks.iterator();
 		while(it.hasNext()) {
 			Block b = it.next();
-			if(b.getType() != Block.TYPE_EMPTY) {
-				Rectangle rect1 = b.getCollisionBox();
-				
-				if(rect1.x < playerCollision.x + playerCollision.width &&
-					rect1.x + rect1.width > playerCollision.x &&
-					rect1.y < playerCollision.y + playerCollision.height &&
-					rect1.height + rect1.y > playerCollision.y) {
-					   return true;
-				}				
+			if(b.getType() != Block.TYPE_EMPTY & b.getCollisionBox().checkCollision(playerCollision)) {
+				return b;
 			}
 		}
-		return false;
+		return null;
 	}
-
 		
 	public static void checkBlockBonus(Player player) {
 		Rectangle playerCollision = player.getCollisionBox();
@@ -118,18 +109,11 @@ public class MapGenerator {
 		while(it.hasNext()) {
 			Block block = it.next();
 			Bonus bonus = block.getBonus();
-			if(bonus != null) {
-				Rectangle rect1 = bonus.getCollisionBox();
-				if(rect1.x < playerCollision.x + playerCollision.width &&
-						rect1.x + rect1.width > playerCollision.x &&
-						rect1.y < playerCollision.y + playerCollision.height &&
-						rect1.height + rect1.y > playerCollision.y) {
-						   block.removeBonus();
-						   bonus.updatePlayer(player);
-				}
+			if(bonus != null && bonus.getCollisionBox().checkCollision(playerCollision)) {
+				block.removeBonus();
+				bonus.updatePlayer(player);
 			}
-		}
-		
+		}		
 	}
 
 	public static void checkEmptyBlock(Bomb bomb) {
@@ -152,7 +136,8 @@ public class MapGenerator {
 					blocks.get(nbBlockTest).destroy();
 					blocked = true;
 				}else {
-					i++;					
+					i++;
+					blocks.get(nbBlockTest).removeBonus();
 				}
 			}
 		}
@@ -173,7 +158,8 @@ public class MapGenerator {
 					blocked = true;
 					blocks.get(nbBlockTest).destroy();
 				}else {
-					i++;					
+					i++;
+					blocks.get(nbBlockTest).removeBonus();
 				}
 			}
 		}
@@ -194,7 +180,8 @@ public class MapGenerator {
 					blocks.get(nbBlockTest).destroy();
 					blocked = true;
 				}else {
-					i++;					
+					i++;
+					blocks.get(nbBlockTest).removeBonus();
 				}
 			}
 		}
@@ -216,11 +203,11 @@ public class MapGenerator {
 					blocked = true;
 				}else {
 					i++;
+					blocks.get(nbBlockTest).removeBonus();
 				}
 			}
 		}
 		bomb.setBlockDistanceDown((i == deep)?i-1:i);
-
 	}
 
 	public static void draw(Graphics2D g) {

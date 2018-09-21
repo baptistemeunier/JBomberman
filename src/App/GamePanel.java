@@ -1,12 +1,14 @@
 package App;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.*;
 
 import javax.swing.JPanel;
 
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = -6496354673243986202L;
 
@@ -34,7 +36,8 @@ public class GamePanel extends JPanel implements Runnable {
 		super();
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setFocusable(true);
-		requestFocus();		
+		requestFocus();
+		addKeyListener(this);
 	}	
 
 	public void addNotify() {
@@ -108,6 +111,21 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics g2 = this.getGraphics();
 		g2.drawImage(image, 0, 0, null);
 		g2.dispose();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		GameManager.instance().currentState().handleEvent(arg0);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		GameManager.instance().currentState().handleEvent(arg0);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		GameManager.instance().currentState().handleEvent(arg0);
 	}
 	
 	

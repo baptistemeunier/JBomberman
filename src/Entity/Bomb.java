@@ -15,14 +15,14 @@ public class Bomb extends Entity {
 	
 	private int frameBeforeExplode = GamePanel.FPS * 2;
 	private boolean explode = false;
-	private int frameBeforeDelete = GamePanel.FPS * 2;
+	private int frameBeforeDelete = GamePanel.FPS;
 	private boolean delete = false;
 	private int blockDistance;
 	private int blockDistanceLeft = 0;
 	private int blockDistanceRight = 0;
 	private int blockDistanceUp = 0;
 	private int blockDistanceDown = 0;
-	
+
 	Bomb(int x, int y, int range) {
 		this.blockDistance = range;
 		caseX = (int) x/PlayingState.BLOCK_SIZE;
@@ -97,7 +97,6 @@ public class Bomb extends Entity {
 			if(frameBeforeExplode == 0) {
 				explode = true;
 				MapGenerator.checkEmptyBlock(this);
-				PlayingState.instance().killPlayer(this);
 			}
 		}
 	}

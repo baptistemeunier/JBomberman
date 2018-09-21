@@ -30,17 +30,14 @@ public class GameManager {
 		}
 		states.push(state);
 		state.initialize();
-		GamePanel.instance().addKeyListener(state);
 	}
 
 	public void popState() {
 		if(!states.isEmpty()) {
 			states.peek().release();	
-			GamePanel.instance().removeKeyListener(states.peek());
 			states.pop();
 			if(!states.isEmpty()) {
 				states.peek().resume();
-				GamePanel.instance().addKeyListener(states.peek());
 			}
 		}
 	}
