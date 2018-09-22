@@ -1,7 +1,7 @@
 package Entity.Bonus;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import Entity.Player;
 
@@ -15,7 +15,7 @@ public class BonusMoreRange extends Bonus {
 		player.addRange();
 	}
 
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		drawBasic(g);
 		g.setColor(Color.BLACK);
 		g.drawString("R", x+10, y+15);		

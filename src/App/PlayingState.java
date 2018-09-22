@@ -102,7 +102,7 @@ public class PlayingState extends GameState {
 	}
 
 	public void killPlayer(Bomb bomb) {
-		Rectangle[] rects = bomb.getExplosionCollisionRects();
+		Rectangle[] rects = bomb.getCollisionBox();
 		Iterator<Player> it = players.iterator();
 		while(it.hasNext()) {
 			Player player = it.next();

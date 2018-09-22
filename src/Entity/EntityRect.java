@@ -1,6 +1,6 @@
 package Entity;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import Utils.Rectangle;
 
@@ -15,12 +15,7 @@ public class EntityRect extends Entity {
 		this.width = width;
 		this.height = height;
 	}
-	
-	public EntityRect(int width, int height) {
-		this.width = width;
-		this.height = height;
-	}
-	
+		
 	public int getWidth() {
 		return this.width;
 	}
@@ -33,7 +28,7 @@ public class EntityRect extends Entity {
 		return new Rectangle(x, y, width, height);
 	}
 
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		g.drawRect(this.x, this.y, this.width, this.height);
 	}
 }

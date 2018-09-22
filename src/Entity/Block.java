@@ -1,7 +1,7 @@
 package Entity;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import Entity.Bonus.Bonus;
 
@@ -19,7 +19,7 @@ public class Block extends EntityRect {
 		this.type = type;
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		if(type == TYPE_SOLID) {
 			g.setColor(Color.GRAY);			
 		}else if(type == TYPE_WALL) {
@@ -28,8 +28,9 @@ public class Block extends EntityRect {
 			g.setColor(Color.WHITE);
 		}
 		g.fillRect(this.x, this.y, this.width, this.height);
-		if(type == TYPE_EMPTY && bonus != null)
+		if(type == TYPE_EMPTY && bonus != null) {
 			bonus.draw(g);
+		}
 	}
 
 	public int getType() {

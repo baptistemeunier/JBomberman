@@ -1,17 +1,12 @@
 package Entity;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 
 public abstract class Entity {
 
 	protected int x;
 	protected int y;
-
-
-	public Entity() {
-
-	}
 
 	public int getX() {
 		return this.x;
@@ -29,6 +24,6 @@ public abstract class Entity {
 		this.y = y;
 	}
 
-	public abstract void draw(Graphics g);
+	public abstract void draw(Graphics2D g);
 
 }
