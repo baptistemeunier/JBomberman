@@ -1,6 +1,5 @@
 package State.Bomb;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -28,12 +27,6 @@ public class ExploseState extends StateBomb {
 	@Override
 	public void release() {
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void handleEvent(AWTEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

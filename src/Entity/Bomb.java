@@ -6,15 +6,26 @@ import App.PlayingState;
 import State.Bomb.*;
 import Utils.Rectangle;
 
+/**
+ * Class Bomb
+ * This class is use to represents a bomb
+ * @author baptiste
+ */
 public class Bomb extends Entity {
 
-	private int caseX;
+	private int caseX; // Case of the bomb
 	private int caseY;
 	
-	private int range;
-	private Player player;
-	private StateBomb state;
+	private int range; // Range of explosion
+	private Player player; // Player who drop this bomb
+	private StateBomb state; // State who handle the bomb's life
 
+	/**
+	 * Constructor
+	 * @param x : x coordinate of where the bomb is drop
+	 * @param y : y coordinate of where the bomb is drop
+	 * @param player PLayer who drop the bomb
+	 */
 	public Bomb(int x, int y, Player player) {
 		this.range = player.getRange();
 		this.player = player;
@@ -27,42 +38,66 @@ public class Bomb extends Entity {
 		state.initialize();
 	}
 
+	/**
+	 * Get the x coordinate of the case
+	 * @return the x coordinate of the case
+	 */
 	public int getCaseX() {
 		return caseX;
 	}
 
+	/**
+	 * Get the y coordinate of the case
+	 * @return the y coordinate of the case
+	 */
 	public int getCaseY() {
 		return caseY;
 	}
 
-	public void setState(StateBomb s) {
-		this.state = s;
-	}
-
+	/**
+	 * Get the player who drop the bomb
+	 * @return player who drop the bomb
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Set the current state
+	 * @param StateBomb s the new state
+	 */
+	public void setState(StateBomb s) {
+		this.state = s;
+	}
+
+	/**
+	 * Boolean function to know if the bomb is explode
+	 * @return true is explode false otherwise
+	 */
 	public boolean isExplode() {
 		return this.state instanceof ExploseState;
 	}
 
+	/**
+	 * Get the range of the bomb
+	 * @return the range
+	 */
 	public int getRange() {
 		return range;
 	}
 
-	public void update() {
-		state.update();
-	}
-	
-	public void draw(Graphics2D g) {
-		state.draw(g);
-	}
-
+	/**
+	 * Boolean function who say if the bomb need to be remove of the playground
+	 * @return true if bomb need to be remove false otherwise
+	 */
 	public boolean needToBeRemove() {
 		return this.isExplode() && ((ExploseState) state).needRemove();
 	}
 
+	/**
+	 * Get the collision box of the bomb
+	 * @return The collision box
+	 */
 	public Rectangle[] getCollisionBox() {
 		if(this.isExplode()) {
 			return ((ExploseState) this.state).getCollisionBox();
@@ -70,4 +105,17 @@ public class Bomb extends Entity {
 		return null;
 	}
 	
+	/**
+	 * Function who update the bomb
+	 */
+	public void update() {
+		state.update();
+	}
+	
+	/**
+	 * @see Entity.Entity#draw(java.awt.Graphics2D)
+	 **/
+	public void draw(Graphics2D g) {
+		state.draw(g);
+	}
 }

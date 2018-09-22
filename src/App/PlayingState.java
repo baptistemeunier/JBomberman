@@ -115,20 +115,7 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	protected void handleEvent(AWTEvent event) {
-		if(event.getID() == KeyEvent.KEY_RELEASED) {
-			int keyCode = ((KeyEvent) event).getKeyCode();
-			System.out.println("KEY_RELEASED :" + keyCode);
-		} else if(event.getID() == KeyEvent.KEY_PRESSED) {
-			int keyCode = ((KeyEvent) event).getKeyCode();
-			System.out.println("KEY_PRESSED :" + keyCode);			
-		} else if(event.getID() == KeyEvent.KEY_TYPED) {
-			int keyCode = ((KeyEvent) event).getKeyCode();
-			System.out.println("KEY_TYPED :" + keyCode);			
-		} else {
-			System.out.println("INCONNU");
-		}
-		
+	protected void handleEvent(AWTEvent event) {	
 		Iterator<Player> playersIt = players.iterator();
 		while(playersIt.hasNext()) {
 			playersIt.next().handleEvent(event);

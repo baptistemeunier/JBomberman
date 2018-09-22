@@ -122,17 +122,6 @@ public class MapGenerator {
 		return blocks.get(x + y*NB_BLOCK_X);
 	}
 
-	public static Bomb getBomb(int x, int y) {
-		Iterator<Bomb> it = bombs.iterator();
-		while(it.hasNext()) {
-			Bomb bomb = it.next();
-			if(x == bomb.getCaseX() && y == bomb.getCaseY()) {
-				return bomb;
-			}
-		}
-		return null;
-	}
-
 	public static void update() {
 		Iterator<Bomb> it = bombs.iterator();
 		while(it.hasNext()) {
