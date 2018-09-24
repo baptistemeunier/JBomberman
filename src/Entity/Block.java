@@ -113,4 +113,8 @@ public class Block extends EntityRect {
 		this.type = TYPE_EMPTY;
 	}
 
+	public boolean isWall() {
+		return this.type == TYPE_WALL || this.type == TYPE_SOLID;
+	}
+
 }

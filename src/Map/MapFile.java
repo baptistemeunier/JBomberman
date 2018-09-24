@@ -1,10 +1,14 @@
 package Map;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import Entity.Block;
+import GameState.PlayingState;
 
 public class MapFile {
 
@@ -16,8 +20,29 @@ public class MapFile {
 		this.path = "maps/" + path;
 	}
 
-	private void load() {
-		
+	ArrayList<Block> load() {
+	    BufferedReader reader;
+		ArrayList<Block> blocks = new ArrayList<Block>();
+		try {
+			reader = new BufferedReader(new FileReader(path));
+		    String line = reader.readLine();
+		    String[] types = line.split("!");
+		    Map.NB_BLOCK_X = Integer.parseInt(types[0]);
+		    Map.NB_BLOCK_Y = Integer.parseInt(types[1]);
+			for (int i = 2; i < types.length-1; i++) {
+				int type = Integer.parseInt(types[i]);
+				int x = (i-2) % Map.NB_BLOCK_X;
+				int y = (i-2-x) / Map.NB_BLOCK_X;
+				Block block = new Block(x*PlayingState.BLOCK_SIZE, y*PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, type);
+				blocks.add(block);
+			}
+			reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return blocks;
 	}
 	
 	public void save() {

@@ -22,10 +22,10 @@ public class Map {
 
 	
 	public static ArrayList<Block> generateMap() throws Exception {
-		blocks = new ArrayList<Block>();
 		bombs = new ArrayList<Bomb>();
 		
 		ArrayList<Block> blocksEmpty = generateLayout();
+		System.out.println(blocksEmpty.size());
 		ArrayList<Block> blocksBonus = generateWall(blocksEmpty);
 		generateBonus(blocksBonus);
 		
@@ -45,17 +45,15 @@ public class Map {
 	}
 	
 	private static ArrayList<Block> generateLayout() {
+		MapFile file = new MapFile("basic");
+		blocks = file.load();
 		ArrayList<Block> blocksEmpty = new ArrayList<Block>();
-		String game = "1111111111111111111\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1111111111111111111";
-		String[] lines = game.split("\n");
-		for (int y = 0; y < lines.length;y++) {
-			for (int x = 0; x < lines[y].length();x++) {
-				int type = (int) lines[y].charAt(x);
-				Block block = new Block(x*PlayingState.BLOCK_SIZE, y*PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, type);
-				blocks.add(block);
-				if(type == Block.TYPE_EMPTY) {
-					blocksEmpty.add(block);
-				}
+		
+		Iterator<Block> it = blocks.iterator();
+		while(it.hasNext()) {
+			Block b = it.next();
+			if(b.getType() == Block.TYPE_EMPTY) {
+				blocksEmpty.add(b);				
 			}
 		}
 		return blocksEmpty;
@@ -63,7 +61,6 @@ public class Map {
 
 	private static ArrayList<Block> generateWall(ArrayList<Block> blocksEmpty) {
 		ArrayList<Block> blocksBonus = new ArrayList<Block>();
-		removeBlockSpawn(blocksEmpty);	// Remove block at spawn to avoid player spawn problem
 		int emptySize = blocksEmpty.size();
 		while(blocksEmpty.size() > emptySize*0.4) {
 			int index = (int) Math.floor(Math.random() * blocksEmpty.size());
@@ -96,21 +93,11 @@ public class Map {
 		
 	}
 
-	private static ArrayList<Block> removeBlockSpawn(ArrayList<Block> blocksEmpty) {
-		blocksEmpty.remove(0);
-		blocksEmpty.remove(0);
-		blocksEmpty.remove(NB_BLOCK_X-4);
-		blocksEmpty.remove(blocksEmpty.size()-NB_BLOCK_X+1);
-		blocksEmpty.remove(blocksEmpty.size()-1);
-		blocksEmpty.remove(blocksEmpty.size()-1);
-		return blocksEmpty;
-	}
-
 	public static Block checkBlockCollision(Rectangle playerCollision) {	
 		Iterator<Block> it = blocks.iterator();
 		while(it.hasNext()) {
 			Block b = it.next();
-			if(b.getType() != Block.TYPE_EMPTY & b.getCollisionBox().checkCollision(playerCollision)) {
+			if(b.isWall() && b.getCollisionBox().checkCollision(playerCollision)) {
 				return b;
 			}
 		}
