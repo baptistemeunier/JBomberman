@@ -3,7 +3,7 @@ package State.Player;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
-import App.MapGenerator;
+import App.Map;
 import Entity.Block;
 import Entity.Player;
 import State.State;
@@ -48,7 +48,7 @@ public class UpMove extends StateMove implements State {
 		if(player.getY() < 0) {
 			player.setY(0);
 		} else {
-			Block b = MapGenerator.checkBlockCollision(player.getCollisionBox());
+			Block b = Map.checkBlockCollision(player.getCollisionBox());
 			if(b != null) {
 				player.setY(b.getY() + b.getHeight());
 			}

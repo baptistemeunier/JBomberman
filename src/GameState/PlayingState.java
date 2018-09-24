@@ -1,12 +1,13 @@
-package App;
+package GameState;
 
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import App.GameManager;
+import App.Map;
 import Entity.Bomb;
 import Entity.Player;
 import Utils.Rectangle;
@@ -26,38 +27,38 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	protected void initialize() {
+	public void initialize() {
 		players = new ArrayList<Player>();
 		players.add(new Player("Player 1", BLOCK_SIZE + BLOCK_SIZE/4, BLOCK_SIZE + BLOCK_SIZE/4));
-		players.add(new Player("Player 2", BLOCK_SIZE*(MapGenerator.NB_BLOCK_X-2) + BLOCK_SIZE/4, BLOCK_SIZE*(MapGenerator.NB_BLOCK_Y-2) + BLOCK_SIZE/4));
+		players.add(new Player("Player 2", BLOCK_SIZE*(Map.NB_BLOCK_X-2) + BLOCK_SIZE/4, BLOCK_SIZE*(Map.NB_BLOCK_Y-2) + BLOCK_SIZE/4));
 		
 		try {
-			MapGenerator.generateMap();
+			Map.generateMap();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	protected void release() {
+	public void release() {
 		// TODO Auto-generated method stub
 		players = null;
 	}
 
 	@Override
-	protected void pause() {
+	public void pause() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void resume() {
+	public void resume() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void update() {
+	public void update() {
 		// Move player
 		Iterator<Player> it = players.iterator();
 		int nb_left = 0;
@@ -71,7 +72,7 @@ public class PlayingState extends GameState {
 				playerName = p.getName();
 			}
 		}	
-		MapGenerator.update();
+		Map.update();
 		// Update Bomb
 		// Check Bomb collision with player
 		// Check Bonus collision with player
@@ -83,8 +84,8 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	protected void draw(Graphics2D g) {
-		MapGenerator.draw(g);
+	public void draw(Graphics2D g) {
+		Map.draw(g);
 		
 		Iterator<Player> playersIt = players.iterator();
 		while(playersIt.hasNext()) {
@@ -115,7 +116,7 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	protected void handleEvent(AWTEvent event) {	
+	public void handleEvent(AWTEvent event) {	
 		Iterator<Player> playersIt = players.iterator();
 		while(playersIt.hasNext()) {
 			playersIt.next().handleEvent(event);

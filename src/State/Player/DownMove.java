@@ -3,8 +3,8 @@ package State.Player;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
-import App.MapGenerator;
-import App.PlayingState;
+import App.Map;
+import GameState.PlayingState;
 import Entity.Block;
 import Entity.Player;
 import State.State;
@@ -46,10 +46,10 @@ public class DownMove extends StateMove implements State {
 	@Override
 	public void update() {
 		player.moveDown();
-		if(player.getY() + player.getHeight() >= MapGenerator.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
-			player.setY(MapGenerator.NB_BLOCK_Y*PlayingState.BLOCK_SIZE + player.getHeight());
+		if(player.getY() + player.getHeight() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
+			player.setY(Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE + player.getHeight());
 		} else {
-			Block b = MapGenerator.checkBlockCollision(player.getCollisionBox());
+			Block b = Map.checkBlockCollision(player.getCollisionBox());
 			if(b != null) {
 				player.setY(b.getY()- player.getHeight());				
 			}

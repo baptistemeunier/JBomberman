@@ -2,6 +2,8 @@ package App;
 
 import java.util.ArrayDeque;
 
+import GameState.GameState;
+
 public class GameManager {
 
 	/** List of all states load */

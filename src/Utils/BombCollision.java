@@ -1,7 +1,7 @@
 package Utils;
 
-import App.MapGenerator;
-import App.PlayingState;
+import App.Map;
+import GameState.PlayingState;
 import Entity.Block;
 import Entity.Bomb;
 
@@ -31,7 +31,7 @@ public class BombCollision {
 				blocked = true;
 				i--;
 			} else {
-				Block block = MapGenerator.getBlock(caseX - i, caseY);
+				Block block = Map.getBlock(caseX - i, caseY);
 				if(block.getType() == Block.TYPE_SOLID) {
 					blocked = true;
 					i--;
@@ -53,7 +53,7 @@ public class BombCollision {
 				blocked = true;
 				i--;
 			} else {
-				Block block = MapGenerator.getBlock(caseX + i, caseY);
+				Block block = Map.getBlock(caseX + i, caseY);
 				if(block.getType() == Block.TYPE_SOLID) {
 					blocked = true;
 					i--;
@@ -75,7 +75,7 @@ public class BombCollision {
 				blocked = true;
 				i--;
 			} else {
-				Block block = MapGenerator.getBlock(caseX, caseY-i);
+				Block block = Map.getBlock(caseX, caseY-i);
 				if(block.getType() == Block.TYPE_SOLID) {
 					blocked = true;
 					i--;
@@ -97,7 +97,7 @@ public class BombCollision {
 				blocked = true;
 				i--;
 			} else {
-				Block block = MapGenerator.getBlock(caseX, caseY + i);
+				Block block = Map.getBlock(caseX, caseY + i);
 				if(block.getType() == Block.TYPE_SOLID) {
 					blocked = true;
 					i--;

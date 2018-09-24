@@ -9,9 +9,11 @@ import Entity.Block;
 import Entity.Bomb;
 import Entity.Player;
 import Entity.Bonus.*;
+import GameState.PlayingState;
+import Map.MapFile;
 import Utils.Rectangle;
 
-public class MapGenerator {
+public class Map {
 
 	private static ArrayList<Block> blocks;
 	private static ArrayList<Bomb> bombs;
@@ -31,9 +33,20 @@ public class MapGenerator {
 		return blocks;
 	}
 	
+	public static ArrayList<Block> generateEmptyMap() {
+		blocks = new ArrayList<Block>();
+		
+		for (int y = 0; y < NB_BLOCK_Y;y++) {
+			for (int x = 0; x < NB_BLOCK_X;x++) {
+				Block block = new Block(x*PlayingState.BLOCK_SIZE, y*PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, 48);
+				blocks.add(block);
+			}
+		}
+		return blocks;
+	}
+	
 	private static ArrayList<Block> generateLayout() {
 		ArrayList<Block> blocksEmpty = new ArrayList<Block>();
-		
 		String game = "1111111111111111111\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1010101010101010101\n1000000000000000001\n1111111111111111111";
 		String[] lines = game.split("\n");
 		for (int y = 0; y < lines.length;y++) {
@@ -101,15 +114,7 @@ public class MapGenerator {
 			if(b.getType() != Block.TYPE_EMPTY & b.getCollisionBox().checkCollision(playerCollision)) {
 				return b;
 			}
-		}/*
-		Iterator<Bomb> itBomb = bombs.iterator();
-		while(itBomb.hasNext()) {
-			Bomb bomb = itBomb.next();
-			Block block = getBlock(bomb.getCaseX(), bomb.getCaseY());
-			if(block.getCollisionBox().checkCollision(playerCollision)) {
-				return block;
-			}
-		}*/
+		}
 		return null;
 	}
 		
@@ -118,8 +123,12 @@ public class MapGenerator {
 		bombs.add(bomb);
 	}
 	
-	public static Block getBlock(int x, int y) {
+	public static Block getBlock(int x, int y) throws IndexOutOfBoundsException {
 		return blocks.get(x + y*NB_BLOCK_X);
+	}
+
+	public static Block getBlockFromCoordinate(int x, int y) throws IndexOutOfBoundsException {
+		return getBlock((int) x / PlayingState.BLOCK_SIZE, (int) y / PlayingState.BLOCK_SIZE);
 	}
 
 	public static void update() {
@@ -157,10 +166,13 @@ public class MapGenerator {
 			it.next().draw(g);
 		}
 
-		Iterator<Bomb> itBomb = bombs.iterator();
-		while(itBomb.hasNext()) {
-			itBomb.next().draw(g);
+		if(bombs != null) {
+			Iterator<Bomb> itBomb = bombs.iterator();
+			while(itBomb.hasNext()) {
+				itBomb.next().draw(g);
+			}			
 		}
 		
 	}
+
 }

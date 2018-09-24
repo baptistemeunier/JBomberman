@@ -2,7 +2,7 @@ package Entity;
 
 import java.awt.Graphics2D;
 
-import App.PlayingState;
+import GameState.PlayingState;
 import State.Bomb.*;
 import Utils.Rectangle;
 

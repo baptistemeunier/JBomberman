@@ -1,4 +1,4 @@
-package App;
+package GameState;
 
 import java.awt.AWTEvent;
 import java.awt.BasicStroke;
@@ -9,6 +9,8 @@ import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import App.GameManager;
+import App.GamePanel;
 import Utils.Rectangle;
 
 public class EndingState extends GameState {
@@ -27,7 +29,7 @@ public class EndingState extends GameState {
 	}
 
 	@Override
-	protected void initialize() {
+	public void initialize() {
 		int test = GamePanel.WIDTH / 6;
 		menuSelection = new ArrayList<Rectangle>();
 		menuSelection.add(new Rectangle(test-10, 565, 145, 50));
@@ -37,25 +39,25 @@ public class EndingState extends GameState {
 	}
 
 	@Override
-	protected void release() {
+	public void release() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void pause() {
+	public void pause() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void resume() {
+	public void resume() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void update() {
+	public void update() {
 		if(choice != -1) {
 			if (choice == 1) {
 				//System.exit(0);
@@ -69,7 +71,7 @@ public class EndingState extends GameState {
 	}
 
 	@Override
-	protected void draw(Graphics2D g) {
+	public void draw(Graphics2D g) {
 		g.setColor(new Color(0, 0, 0, 125));
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
@@ -109,7 +111,7 @@ public class EndingState extends GameState {
 	}
 
 	@Override
-	protected void handleEvent(AWTEvent event) {
+	public void handleEvent(AWTEvent event) {
 		if(event.getID() == KeyEvent.KEY_PRESSED) {
 			int keyCode = ((KeyEvent) event).getKeyCode();
 			if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_Q)  {

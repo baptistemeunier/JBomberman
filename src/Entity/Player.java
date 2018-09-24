@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import App.MapGenerator;
+import App.Map;
 import State.Player.IdleMove;
 import State.Player.StateMove;
 
@@ -72,7 +72,7 @@ public class Player extends EntityRect {
 	
 	public void dropBomb() {
 		if(this.alive && nb_bombs != maxBomb) {
-			MapGenerator.addBomb(x+width/4, y+height/4, this);
+			Map.addBomb(x+width/4, y+height/4, this);
 			nb_bombs++;
 		}
 	}
@@ -80,7 +80,7 @@ public class Player extends EntityRect {
 	public void update() {
  		if(this.alive) {
  			stateMove.update();
-			MapGenerator.checkBlockBonus(this);
+			Map.checkBlockBonus(this);
  		}
 	}
 	

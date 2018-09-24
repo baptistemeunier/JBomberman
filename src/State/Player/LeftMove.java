@@ -3,7 +3,7 @@ package State.Player;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
-import App.MapGenerator;
+import App.Map;
 import Entity.Block;
 import Entity.Player;
 import State.State;
@@ -47,7 +47,7 @@ public class LeftMove extends StateMove implements State {
 		if(player.getX() < 0) {
 			player.setX(0);
 		} else {
-			Block b = MapGenerator.checkBlockCollision(player.getCollisionBox());
+			Block b = Map.checkBlockCollision(player.getCollisionBox());
 			if(b != null) {
 				player.setX(b.getX() + b.getWidth());
 			}

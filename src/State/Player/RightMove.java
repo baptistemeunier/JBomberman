@@ -3,8 +3,8 @@ package State.Player;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
-import App.MapGenerator;
-import App.PlayingState;
+import App.Map;
+import GameState.PlayingState;
 import Entity.Block;
 import Entity.Player;
 import State.State;
@@ -46,10 +46,10 @@ public class RightMove extends StateMove implements State {
 	@Override
 	public void update() {
 		player.moveRight();
-		if(player.getX() + player.getWidth() >= MapGenerator.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
-			player.setX(MapGenerator.NB_BLOCK_X*PlayingState.BLOCK_SIZE - player.getWidth());
+		if(player.getX() + player.getWidth() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
+			player.setX(Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE - player.getWidth());
 		} else {
-			Block b = MapGenerator.checkBlockCollision(player.getCollisionBox());
+			Block b = Map.checkBlockCollision(player.getCollisionBox());
 			if(b != null) {
 				player.setX(b.getX()- player.getWidth());				
 			}
