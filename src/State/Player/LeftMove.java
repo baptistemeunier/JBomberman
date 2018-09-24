@@ -3,9 +3,9 @@ package State.Player;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
-import App.Map;
 import Entity.Block;
 import Entity.Player;
+import Map.Map;
 import State.State;
 
 public class LeftMove extends StateMove implements State {

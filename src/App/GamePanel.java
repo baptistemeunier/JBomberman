@@ -11,8 +11,6 @@ import java.awt.image.*;
 import javax.swing.JPanel;
 
 import GameState.MapEditorState;
-import GameState.PlayingState;
-
 
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 

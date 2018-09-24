@@ -3,8 +3,8 @@ package State.Player;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
-import App.Map;
 import GameState.PlayingState;
+import Map.Map;
 import Entity.Block;
 import Entity.Player;
 import State.State;

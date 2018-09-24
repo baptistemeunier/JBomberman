@@ -1,2 +1,4 @@
 # Remove compiled class
 *.class
+maps/*
+!maps/.gitkeep

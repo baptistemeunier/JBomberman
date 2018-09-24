@@ -2,6 +2,7 @@ package Entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 
 import Entity.Bonus.Bonus;
 
@@ -12,9 +13,11 @@ import Entity.Bonus.Bonus;
  */
 public class Block extends EntityRect {
 	
+	public static final int TYPE_EMPTY = 48;
 	public static final int TYPE_SOLID = 49;
 	public static final int TYPE_WALL = 50;
-	public static final int TYPE_EMPTY = 48;
+	public static final int TYPE_SPAWN = 51;
+	public static final int TYPE_RESERVED = 52;	
 	private int type; // Type of current tile
 
 	private Bonus bonus = null; // Bonus on the tile (if exist)
@@ -43,8 +46,21 @@ public class Block extends EntityRect {
 			g.setColor(new Color(153, 153, 102));
 		}else if(type == TYPE_EMPTY) {
 			g.setColor(Color.WHITE);
+		} else {
+			g.setColor(new Color(220, 220, 220));
 		}
+		
 		g.fillRect(this.x, this.y, this.width, this.height);
+		
+		if(type == TYPE_SPAWN) {
+			g.setColor(Color.red);
+		    g.drawString("Spawn", this.x+5, this.y+this.height/2);			
+		}else if(type == TYPE_RESERVED) {
+			g.setColor(Color.red);
+		    g.draw(new Line2D.Double(this.x, this.y, this.x+this.width-1, this.y+this.height-1));
+		    g.draw(new Line2D.Double(this.x+this.width-1, this.y, this.x, this.y+this.height-1));
+		}
+		
 		if(type == TYPE_EMPTY && bonus != null) {
 			bonus.draw(g);
 		}

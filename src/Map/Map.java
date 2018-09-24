@@ -1,4 +1,4 @@
-package App;
+package Map;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -10,7 +10,6 @@ import Entity.Bomb;
 import Entity.Player;
 import Entity.Bonus.*;
 import GameState.PlayingState;
-import Map.MapFile;
 import Utils.Rectangle;
 
 public class Map {
@@ -128,7 +127,12 @@ public class Map {
 	}
 
 	public static Block getBlockFromCoordinate(int x, int y) throws IndexOutOfBoundsException {
-		return getBlock((int) x / PlayingState.BLOCK_SIZE, (int) y / PlayingState.BLOCK_SIZE);
+		x = (int) x / PlayingState.BLOCK_SIZE;
+		y = (int) y / PlayingState.BLOCK_SIZE;
+		if(x >= NB_BLOCK_X || y >= NB_BLOCK_Y) {
+			throw new IndexOutOfBoundsException();
+		}
+		return getBlock(x, y);
 	}
 
 	public static void update() {

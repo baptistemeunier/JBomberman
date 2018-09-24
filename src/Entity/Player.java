@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import App.Map;
+import Map.Map;
 import State.Player.IdleMove;
 import State.Player.StateMove;
 

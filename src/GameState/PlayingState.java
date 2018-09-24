@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import App.GameManager;
-import App.Map;
 import Entity.Bomb;
 import Entity.Player;
+import Map.Map;
 import Utils.Rectangle;
 
 public class PlayingState extends GameState {

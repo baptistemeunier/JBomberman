@@ -1,7 +1,7 @@
 package Utils;
 
-import App.Map;
 import GameState.PlayingState;
+import Map.Map;
 import Entity.Block;
 import Entity.Bomb;
 
