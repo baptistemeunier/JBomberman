@@ -10,7 +10,7 @@ import java.awt.image.*;
 
 import javax.swing.JPanel;
 
-import GameState.MapEditorState;
+import GameState.MainMenuState;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		requestFocus();
 		addKeyListener(this);
 		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
+		//this.addMouseMotionListener(this);
 	}	
 
 	public void addNotify() {
@@ -58,8 +58,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		running = true;
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
-		GameManager.instance().pushState(MapEditorState.instance());
-		//GameManager.instance().pushState(PlayingState.instance());
+		GameManager.instance().pushState(MainMenuState.instance());
 		
 		long startTime;
 		long URDTimeMillis;

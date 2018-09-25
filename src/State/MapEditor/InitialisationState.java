@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import App.GameManager;
 import GameState.MapEditorState;
 import Map.Map;
 import Map.MapEditor;
@@ -48,7 +49,7 @@ public class InitialisationState extends BasicState {
 					transition(new EditorState());
 				} else if(mEvent.getX() > 600 && mEvent.getX() < 680) {
 					System.out.println("Exit");
-					System.exit(0);
+					GameManager.instance().popState();
 				}
 			}
 			else if(mEvent.getX() > 450 && mEvent.getX() < 480) {

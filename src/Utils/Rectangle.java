@@ -1,5 +1,7 @@
 package Utils;
 
+import java.awt.Graphics2D;
+
 public class Rectangle {
 	public int x;
 	public int y;
@@ -21,5 +23,19 @@ public class Rectangle {
 				   return true;
 		}
 		return false;
+	}
+
+	public boolean checkPoint(int x, int y) {
+		if(this.x < x &&
+				this.x + this.width > x &&
+				this.y < y &&
+				this.height + this.y > y) {
+				   return true;
+		}
+		return false;
+	}
+
+	public void draw(Graphics2D g) {
+		g.drawRect(x, y, width, height);
 	}
 }
