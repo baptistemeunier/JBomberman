@@ -81,6 +81,22 @@ public class MapFile {
 	}
 
 	/**
+	 * Set the map width
+	 * @param int the map width
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	/**
+	 * Set the map height
+	 * @param int the map height
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
 	 * Get all static block
 	 * @return 
 	 */

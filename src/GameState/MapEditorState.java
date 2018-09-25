@@ -1,24 +1,19 @@
 package GameState;
 
 import java.awt.AWTEvent;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.Iterator;
 
-import App.GamePanel;
 import Entity.Block;
-import Map.Map;
 import Map.MapEditor;
+import State.MapEditor.*;
 
 public class MapEditorState extends GameState {
 
+	BasicState state;
+	
 	MapEditor editor = null;
 	Block currentblock = null;
 	private boolean created;
-	private String name;
 	
 	private static MapEditorState instance;
 	public static MapEditorState instance() {
@@ -30,35 +25,37 @@ public class MapEditorState extends GameState {
 
 	@Override
 	public void initialize() {
-		editor = new MapEditor();
-		editor.initialize();
+		state = new InitialisationState();
+		state.initialize();
+//		editor = new MapEditor();
+//		editor.initialize();
 	}
 
 	@Override
 	public void release() {
-		editor = null;
+		state.release();
+//		editor = null;
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void update() {
-
+		state.update();
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		if(created != true) {
+		state.draw(g);
+/*		if(created != true) {
 			editor.draw(g);
 
 			if(currentblock != null) {
@@ -81,11 +78,13 @@ public class MapEditorState extends GameState {
 			g.drawString("Map name : " + name, 200, GamePanel.HEIGHT/2);		
 			g.setFont(oldFont);			
 
-		}
+		}*/
 	}
 
 	@Override
 	public void handleEvent(AWTEvent event) {
+		state.handleEvent(event);
+		/*
 		if(created != true) {
 			if(event.getID() == MouseEvent.MOUSE_CLICKED) {
 				int x = ((MouseEvent) event).getX();
@@ -135,7 +134,7 @@ public class MapEditorState extends GameState {
 					name += c;
 				}
 			}
-		}
+		}*/
 	}
 
 }

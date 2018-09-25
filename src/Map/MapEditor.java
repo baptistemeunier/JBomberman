@@ -18,6 +18,7 @@ public class MapEditor {
 	};
 	
 	private ArrayList<Block> blockList;
+	private MapFile file;
 
 	public MapEditor() {
 		
@@ -31,8 +32,7 @@ public class MapEditor {
 		}		
 	}
 
-	public void save(String name) {
-		MapFile file = new MapFile(name);
+	public void save() {
 		file.save();
 	}
 
@@ -55,4 +55,7 @@ public class MapEditor {
 		}
 	}
 
+	public void setFile(MapFile file) {
+		this.file = file;
+	}
 }
