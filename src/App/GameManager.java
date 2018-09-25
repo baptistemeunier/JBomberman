@@ -30,8 +30,8 @@ public class GameManager {
 		if(!states.isEmpty()) {
 			states.peek().pause();
 		}
-		states.push(state);
 		state.initialize();
+		states.push(state);
 	}
 
 	public void popState() {

@@ -60,10 +60,10 @@ public class EndingState extends GameState {
 	public void update() {
 		if(choice != -1) {
 			if (choice == 1) {
-				//System.exit(0);
+				GameManager.instance().popState();
 			} else if (choice == 2) {
 				System.exit(0);
-			}else { // choice == 0
+			}else {
 				GameManager.instance().setState(PlayingState.instance());
 			}
 			choice = -1;
