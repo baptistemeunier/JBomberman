@@ -41,7 +41,7 @@ public class MapEditor {
 	}
 
 	public void draw(Graphics2D g) {
-		Map.draw(g);		
+		Map.draw(g);
 
 		g.setColor(Color.BLACK);
 		for(int i=0; i < 19; i++) {
