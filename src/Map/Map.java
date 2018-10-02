@@ -147,7 +147,7 @@ public class Map {
 				block.removeBonus();
 				bonus.updatePlayer(player);
 			}
-		}		
+		}
 	}
 
 	public static void draw(Graphics2D g) {

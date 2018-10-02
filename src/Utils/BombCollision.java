@@ -27,6 +27,7 @@ public class BombCollision {
 		int i = 1;
 		boolean blocked = false;
 		while(i < deep && !blocked) {
+			// checkBlock(caseX - i, caseY);
 			if(caseX-i < 0) {
 				blocked = true;
 				i--;

@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
 import Entity.Bonus.Bonus;
+import Sprite.SpriteLoader;
 
 /**
  * Class Block
@@ -40,17 +41,15 @@ public class Block extends EntityRect {
 	 * @see Entity.EntityRect#draw(java.awt.Graphics2D)
 	 **/
 	public void draw(Graphics2D g) {
+		SpriteLoader sl = SpriteLoader.instance();
 		if(type == TYPE_SOLID) {
-			g.setColor(Color.GRAY);			
+			g.drawImage(sl.getStrite("tiles", "block"), this.x, this.y, this.width, this.height, null, null);
 		}else if(type == TYPE_WALL) {
-			g.setColor(new Color(153, 153, 102));
-		}else if(type == TYPE_EMPTY) {
-			g.setColor(Color.WHITE);
-		} else {
-			g.setColor(new Color(220, 220, 220));
+			g.drawImage(sl.getStrite("tiles", "wall"), this.x, this.y, this.width, this.height, null, null);
+		}else {
+			g.drawImage(sl.getStrite("tiles", "grass"), this.x, this.y, this.width, this.height, null, null);
 		}
 		
-		g.fillRect(this.x, this.y, this.width, this.height);
 		
 		if(type == TYPE_SPAWN) {
 			g.setColor(Color.red);

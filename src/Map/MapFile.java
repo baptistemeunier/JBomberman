@@ -29,7 +29,7 @@ public class MapFile {
 		    String[] types = line.split("!");
 		    Map.NB_BLOCK_X = Integer.parseInt(types[0]);
 		    Map.NB_BLOCK_Y = Integer.parseInt(types[1]);
-			for (int i = 2; i < types.length-1; i++) {
+			for (int i = 2; i < types.length; i++) {
 				int type = Integer.parseInt(types[i]);
 				int x = (i-2) % Map.NB_BLOCK_X;
 				int y = (i-2-x) / Map.NB_BLOCK_X;

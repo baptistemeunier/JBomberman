@@ -1,7 +1,6 @@
 package GameState;
 
 import java.awt.AWTEvent;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -90,14 +89,6 @@ public class PlayingState extends GameState {
 		Iterator<Player> playersIt = players.iterator();
 		while(playersIt.hasNext()) {
 			playersIt.next().draw(g);
-		}
-		
-		// Grid for debug
-		g.setColor(Color.BLACK);
-		for(int i=0; i < 19; i++) {
-			for(int j=0; j < 13; j++) {
-				g.drawRect(i*50, j*50, 50,50);
-			}
 		}
 		
 	}
