@@ -1,8 +1,6 @@
 package Entity.Bonus;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
+import Animation.BonusAnimation;
 import Entity.Player;
 
 public class BonusMoreRange extends Bonus {
@@ -15,10 +13,9 @@ public class BonusMoreRange extends Bonus {
 		player.addRange();
 	}
 
-	public void draw(Graphics2D g) {
-		drawBasic(g);
-		g.setColor(Color.BLACK);
-		g.drawString("R", x+10, y+15);		
+	public void launchAnimation() {
+		animation = new BonusAnimation("range");
+		Animation.AnimationManager.instance().add(animation);
 	}
 
 }

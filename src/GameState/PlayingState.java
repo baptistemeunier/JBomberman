@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import Animation.AnimationManager;
 import App.GameManager;
 import Entity.Bomb;
 import Entity.Player;
@@ -76,10 +77,14 @@ public class PlayingState extends GameState {
 		// Check Bomb collision with player
 		// Check Bonus collision with player
 		
+		// Update Animation
+		AnimationManager.instance().update();
+		
 		if(nb_left <= 1) {
 			EndingState.instance().setWinnerName(playerName);
 			GameManager.instance().setState(EndingState.instance());
 		}
+	
 	}
 
 	@Override

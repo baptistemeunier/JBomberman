@@ -5,14 +5,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.*;
 
 import javax.swing.JPanel;
 
 import GameState.MainMenuState;
 
-public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
+public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener {
 
 	private static final long serialVersionUID = -6496354673243986202L;
 
@@ -43,7 +42,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		requestFocus();
 		addKeyListener(this);
 		this.addMouseListener(this);
-		//this.addMouseMotionListener(this);
 	}	
 
 	public void addNotify() {
@@ -155,17 +153,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	@Override
 	public void mouseReleased(MouseEvent event) {
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent event) {	
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	}	
 	
 }

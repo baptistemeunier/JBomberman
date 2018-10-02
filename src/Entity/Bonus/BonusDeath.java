@@ -1,8 +1,6 @@
 package Entity.Bonus;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
+import Animation.BonusAnimation;
 import Entity.Player;
 
 public class BonusDeath extends Bonus {
@@ -15,10 +13,9 @@ public class BonusDeath extends Bonus {
 		player.kill();
 	}
 
-	public void draw(Graphics2D g) {
-		drawBasic(g);
-		g.setColor(Color.BLACK);
-		g.drawString("K", x+10, y+15);
+	public void launchAnimation() {
+		animation = new BonusAnimation("death");
+		Animation.AnimationManager.instance().add(animation);
 	}
 
 }

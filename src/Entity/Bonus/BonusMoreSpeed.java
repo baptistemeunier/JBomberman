@@ -1,8 +1,6 @@
 package Entity.Bonus;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
+import Animation.BonusAnimation;
 import Entity.Player;
 
 public class BonusMoreSpeed extends Bonus {
@@ -15,10 +13,10 @@ public class BonusMoreSpeed extends Bonus {
 		player.addSpeed();
 	}
 
-	public void draw(Graphics2D g) {
-		drawBasic(g);
-		g.setColor(Color.BLACK);
-		g.drawString("S", x+10, y+15);
+	@Override
+	public void launchAnimation() {
+		animation = new BonusAnimation("speed");
+		Animation.AnimationManager.instance().add(animation);		
 	}
 
 }

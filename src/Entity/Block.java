@@ -101,7 +101,11 @@ public class Block extends EntityRect {
 	 * Remove the tile bonus
 	 */
 	public void removeBonus() {
-		this.bonus = null;
+		if(bonus != null) {
+			bonus.remove();
+			bonus = null;			
+		}
+		
 	}
 
 	/**
@@ -110,6 +114,9 @@ public class Block extends EntityRect {
 	 */
 	public void destroy() {
 		this.type = TYPE_EMPTY;
+		if(bonus != null) {
+			bonus.launchAnimation();
+		}
 	}
 
 	public boolean isWall() {

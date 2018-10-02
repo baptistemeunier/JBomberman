@@ -118,4 +118,5 @@ public class Bomb extends Entity {
 	public void draw(Graphics2D g) {
 		state.draw(g);
 	}
+
 }

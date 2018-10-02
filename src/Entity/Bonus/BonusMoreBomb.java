@@ -1,8 +1,6 @@
 package Entity.Bonus;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
+import Animation.BonusAnimation;
 import Entity.Player;
 
 public class BonusMoreBomb extends Bonus {
@@ -15,9 +13,9 @@ public class BonusMoreBomb extends Bonus {
 		player.addBombSlot();
 	}
 
-	public void draw(Graphics2D g) {
-		drawBasic(g);
-		g.setColor(Color.BLACK);
-		g.drawString("B", x+10, y+15);
+	@Override
+	public void launchAnimation() {
+		animation = new BonusAnimation("bomb");
+		Animation.AnimationManager.instance().add(animation);		
 	}
 }
