@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import GameState.PlayingState;
 import Map.Map;
 import Entity.Block;
+import Entity.Entity;
 import Entity.Player;
 import State.State;
 
@@ -49,9 +50,13 @@ public class RightMove extends StateMove implements State {
 		if(player.getX() + player.getWidth() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
 			player.setX(Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE - player.getWidth());
 		} else {
-			Block b = Map.checkBlockCollision(player.getCollisionBox());
-			if(b != null) {
-				player.setX(b.getX()- player.getWidth());				
+			Entity e = Map.checkCollision(player.getCollisionBox());
+			if(e != null) {
+				if(e instanceof Block) {
+					player.setX(e.getX() - player.getWidth());
+				} else {
+					player.moveLeft();					
+				}
 			}
 		}
 	}

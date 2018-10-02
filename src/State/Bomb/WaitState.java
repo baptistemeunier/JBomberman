@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 
 import App.GamePanel;
 import Entity.Bomb;
+import GameState.PlayingState;
+import Utils.Rectangle;
 import Animation.BombAnimation;
 
 public class WaitState extends StateBomb {
@@ -37,6 +39,15 @@ public class WaitState extends StateBomb {
 	@Override
 	public void draw(Graphics2D g) {		
 		g.drawImage(anim.getFrame(), bomb.getX(), bomb.getY(), 32, 32, null, null);
+	}
+
+	@Override
+	public Rectangle[] getCollisionBox() {
+		if(this.frameBeforeExplode > GamePanel.FPS * 1.7) {
+			return null;
+		}
+		Rectangle[] r = {new Rectangle(bomb.getCaseX()*PlayingState.BLOCK_SIZE+PlayingState.BLOCK_SIZE/4, bomb.getCaseY()*PlayingState.BLOCK_SIZE+PlayingState.BLOCK_SIZE/4, PlayingState.BLOCK_SIZE/2, PlayingState.BLOCK_SIZE/2)};
+		return r;
 	}
 
 }

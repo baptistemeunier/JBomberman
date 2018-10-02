@@ -4,6 +4,7 @@ import java.awt.AWTEvent;
 
 import Entity.Bomb;
 import State.State;
+import Utils.Rectangle;
 
 public abstract class StateBomb implements State {
 
@@ -23,5 +24,7 @@ public abstract class StateBomb implements State {
 		bomb.setState((StateBomb) s);
 		s.initialize();		
 	}
+
+	public abstract Rectangle[] getCollisionBox();
 
 }

@@ -1,5 +1,6 @@
 package Entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import GameState.PlayingState;
@@ -99,10 +100,7 @@ public class Bomb extends Entity {
 	 * @return The collision box
 	 */
 	public Rectangle[] getCollisionBox() {
-		if(this.isExplode()) {
-			return ((ExploseState) this.state).getCollisionBox();
-		}
-		return null;
+		return state.getCollisionBox();
 	}
 	
 	/**
@@ -117,6 +115,11 @@ public class Bomb extends Entity {
 	 **/
 	public void draw(Graphics2D g) {
 		state.draw(g);
+		
+		g.setColor(Color.BLUE);
+		if( this.getCollisionBox() != null) {
+			g.drawRect(this.getCollisionBox()[0].x, this.getCollisionBox()[0].y, this.getCollisionBox()[0].width, this.getCollisionBox()[0].height);			
+		}
 	}
 
 }

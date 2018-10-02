@@ -4,6 +4,7 @@ import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
 import Entity.Block;
+import Entity.Entity;
 import Entity.Player;
 import Map.Map;
 import State.State;
@@ -48,9 +49,13 @@ public class UpMove extends StateMove implements State {
 		if(player.getY() < 0) {
 			player.setY(0);
 		} else {
-			Block b = Map.checkBlockCollision(player.getCollisionBox());
-			if(b != null) {
-				player.setY(b.getY() + b.getHeight());
+			Entity e = Map.checkCollision(player.getCollisionBox());
+			if(e != null) {
+				if(e instanceof Block) {
+					player.setY(e.getY() + ((Block )e).getHeight());
+				} else {
+					player.moveDown();
+				}
 			}
 		}
 	}

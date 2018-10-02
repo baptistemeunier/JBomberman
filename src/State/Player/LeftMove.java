@@ -4,6 +4,7 @@ import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
 
 import Entity.Block;
+import Entity.Entity;
 import Entity.Player;
 import Map.Map;
 import State.State;
@@ -47,9 +48,13 @@ public class LeftMove extends StateMove implements State {
 		if(player.getX() < 0) {
 			player.setX(0);
 		} else {
-			Block b = Map.checkBlockCollision(player.getCollisionBox());
-			if(b != null) {
-				player.setX(b.getX() + b.getWidth());
+			Entity e = Map.checkCollision(player.getCollisionBox());
+			if(e != null) {
+				if(e instanceof Block) {
+					player.setX(e.getX() + ((Block )e).getWidth());
+				} else {
+					player.moveRight();					
+				}
 			}
 		}
 	}

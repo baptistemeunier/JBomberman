@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import Entity.Block;
 import Entity.Bomb;
+import Entity.Entity;
 import Entity.Player;
 import Entity.Bonus.*;
 import GameState.PlayingState;
@@ -93,7 +94,16 @@ public class Map {
 		
 	}
 
-	public static Block checkBlockCollision(Rectangle playerCollision) {	
+	public static Entity checkCollision(Rectangle playerCollision) {
+		Entity b = checkBlockCollision(playerCollision);
+		if(b != null) {
+			return b;
+		}
+		b = checkBombCollision(playerCollision);
+		return b;
+	}
+
+	private static Block checkBlockCollision(Rectangle playerCollision) {	
 		Iterator<Block> it = blocks.iterator();
 		while(it.hasNext()) {
 			Block b = it.next();
@@ -104,6 +114,18 @@ public class Map {
 		return null;
 	}
 		
+	private static Bomb checkBombCollision(Rectangle playerCollision) {	
+		Iterator<Bomb> it = bombs.iterator();
+		while(it.hasNext()) {
+			Bomb b = it.next();
+			Rectangle[] collision = b.getCollisionBox();
+			if(!b.isExplode() && collision != null && collision[0].checkCollision(playerCollision)) {
+				return b;
+			}
+		}
+		return null;
+	}
+
 	public static void addBomb(int x, int y, Player player) {
 		Bomb bomb = new Bomb(x, y, player);
 		bombs.add(bomb);

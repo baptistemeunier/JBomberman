@@ -23,7 +23,9 @@ public abstract class Bonus extends EntityRect{
 	public abstract void updatePlayer(Player player);
 
 	public void remove() {
-		animation.setFinish(true);
+		if(animation != null) {
+			animation.setFinish(true);			
+		}
 	}
 
 	public abstract void launchAnimation();

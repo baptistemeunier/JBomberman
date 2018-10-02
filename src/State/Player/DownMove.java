@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import GameState.PlayingState;
 import Map.Map;
 import Entity.Block;
+import Entity.Entity;
 import Entity.Player;
 import State.State;
 
@@ -49,9 +50,13 @@ public class DownMove extends StateMove implements State {
 		if(player.getY() + player.getHeight() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
 			player.setY(Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE + player.getHeight());
 		} else {
-			Block b = Map.checkBlockCollision(player.getCollisionBox());
-			if(b != null) {
-				player.setY(b.getY()- player.getHeight());				
+			Entity e = Map.checkCollision(player.getCollisionBox());
+			if(e != null) {
+				if(e instanceof Block) {
+					player.setY(e.getY() - player.getHeight());
+				} else {
+					player.moveUp();					
+				}
 			}
 		}
 	}
