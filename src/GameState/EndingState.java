@@ -7,10 +7,12 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import App.GameManager;
 import App.GamePanel;
+import Map.Map;
 import Utils.Rectangle;
 
 public class EndingState extends GameState {
@@ -19,6 +21,7 @@ public class EndingState extends GameState {
 	private ArrayList<Rectangle> menuSelection;
 	private int choice = -1;
 	private String winner;
+	private BufferedImage lastFrame;
 	
 	private static EndingState instance;
 	public static EndingState instance() {
@@ -30,11 +33,11 @@ public class EndingState extends GameState {
 
 	@Override
 	public void initialize() {
-		int test = GamePanel.WIDTH / 6;
+		int space = GamePanel.WIDTH / 6;
 		menuSelection = new ArrayList<Rectangle>();
-		menuSelection.add(new Rectangle(test-10, 565, 145, 50));
-		menuSelection.add(new Rectangle(2*test+test/2-10, 565, 210, 50));
-		menuSelection.add(new Rectangle(4*test+ test/2-10, 565, 90, 50));
+		menuSelection.add(new Rectangle(space-10, 565, 145, 50));
+		menuSelection.add(new Rectangle(2*space+space/2-10, 565, 210, 50));
+		menuSelection.add(new Rectangle(4*space+ space/2-10, 565, 90, 50));
 
 	}
 
@@ -72,11 +75,13 @@ public class EndingState extends GameState {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(new Color(0, 0, 0, 125));
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		
-		g.setColor(Color.YELLOW);
+		g.drawImage(lastFrame, 0, 0, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_X, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_Y, null ,null);
+		g.setColor(new Color(12,12,12,130));
+		g.fillRect(0, 0, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_X, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_Y);
 
+		g.setColor(Color.WHITE);
 		Font oldFont = g.getFont();
 		Stroke oldStroke = g.getStroke();
 
@@ -91,10 +96,10 @@ public class EndingState extends GameState {
 		}
 		g.drawString(winText, GamePanel.WIDTH / 2 - 150, 200);
 
-		int test = GamePanel.WIDTH / 6;
-		g.drawString("Restart", test, 600);
-		g.drawString("Go to menu", 2*test+test/2, 600);
-		g.drawString("Quit", 4*test+ test/2, 600);
+		int space = GamePanel.WIDTH / 6;
+		g.drawString("Restart", space, 600);
+		g.drawString("Go to menu", 2*space+space/2, 600);
+		g.drawString("Quit", 4*space+ space/2, 600);
 
 		g.setColor(Color.RED);
         g.setStroke(new BasicStroke(3));        
@@ -133,6 +138,10 @@ public class EndingState extends GameState {
 				choice = currentChoice;
 			}
 		}		
+	}
+
+	public void setLastFrame(BufferedImage image) {
+		lastFrame = image;
 	}
 
 }

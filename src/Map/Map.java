@@ -188,4 +188,8 @@ public class Map {
 		
 	}
 
+	public static void removeAllBombs() {
+		bombs.clear();
+	}
+
 }

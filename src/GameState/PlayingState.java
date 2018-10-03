@@ -2,6 +2,7 @@ package GameState;
 
 import java.awt.AWTEvent;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -82,9 +83,18 @@ public class PlayingState extends GameState {
 		
 		if(nb_left <= 1) {
 			EndingState.instance().setWinnerName(playerName);
+			EndingState.instance().setLastFrame(drawLastFrame());
 			GameManager.instance().setState(EndingState.instance());
 		}
 	
+	}
+
+	private BufferedImage drawLastFrame() {
+		BufferedImage image = new BufferedImage(BLOCK_SIZE*Map.NB_BLOCK_X, BLOCK_SIZE*Map.NB_BLOCK_Y, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = (Graphics2D) image.getGraphics();
+		Map.removeAllBombs();
+		draw(g);
+		return image;
 	}
 
 	@Override
@@ -95,7 +105,6 @@ public class PlayingState extends GameState {
 		while(playersIt.hasNext()) {
 			playersIt.next().draw(g);
 		}
-		
 	}
 
 	public void killPlayer(Bomb bomb) {
