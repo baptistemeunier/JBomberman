@@ -7,26 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import App.GamePanel;
-import Utils.Rectangle;
-
-public class VerticalMenu {
+public class FreeMenu {
 	ArrayList<MenuItem> items;
 	
-	public VerticalMenu() {
+	public FreeMenu() {
 		items = new ArrayList<MenuItem>();
 	}
 	
 	public void addItem(MenuItem item) {
 		items.add(item);
-		int x = GamePanel.WIDTH/2;
-		int y = GamePanel.HEIGHT/(items.size()+1);
-		int i = 1;
-		
-		for (MenuItem it: items) {
-			it.setBox(new Rectangle(x-50, y*i-30, item.getName().length()*30, 40));
-			i++;
-		}
 	}
 
 	public String checkItem(AWTEvent event) {
@@ -41,21 +30,11 @@ public class VerticalMenu {
 		return null;
 	}
 	public void draw(Graphics2D g) {
-		g.setColor(Color.BLUE);
-		int x = GamePanel.WIDTH/2;
-		int y = GamePanel.HEIGHT/(items.size()+1);
-		int i = 1;
-		
-		Font oldFont = g.getFont();
-		Font font = new Font("Arial",Font.BOLD,30);
-		g.setFont(font);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Press Start", Font.PLAIN, 40));
 
 		for (MenuItem item: items) {
-			g.setFont(font);
-			g.drawString(item.getName(), x-50, y*i);
-			item.getBox().draw(g);
-			i++;
+			g.drawString(item.getName(), item.getX(), item.getY());
 		}
-		g.setFont(oldFont);		
 	}
 }

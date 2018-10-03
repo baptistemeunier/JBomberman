@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import App.GameManager;
 import App.GamePanel;
 import Map.Map;
+import Utils.FontLoader;
 import Utils.Rectangle;
 
 public class EndingState extends GameState {
@@ -82,19 +83,18 @@ public class EndingState extends GameState {
 		g.fillRect(0, 0, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_X, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_Y);
 
 		g.setColor(Color.WHITE);
-		Font oldFont = g.getFont();
+		g.setFont(new Font("Press Start", Font.PLAIN, 32));
 		Stroke oldStroke = g.getStroke();
 
-		Font font = new Font("Arial",Font.BOLD,30);
-		g.setFont(font);
-		g.drawString("Game Over ", GamePanel.WIDTH / 2 - 120, 100);
+		g.drawString("Game Over ", 330, 100);
 		String winText;
 		if(winner != null) {
 			winText = winner + " win !";
 		} else {
 			winText = "You are both loser !";			
 		}
-		g.drawString(winText, GamePanel.WIDTH / 2 - 150, 200);
+		g.drawString(winText, 280, 200);
+        FontLoader.resetFont(g);
 
 		int space = GamePanel.WIDTH / 6;
 		g.drawString("Restart", space, 600);
@@ -106,7 +106,6 @@ public class EndingState extends GameState {
 		Rectangle rect = menuSelection.get(currentChoice);
 		g.drawRect(rect.x, rect.y, rect.width, rect.height);
 
-		g.setFont(oldFont);
         g.setStroke(oldStroke);
 
 	}

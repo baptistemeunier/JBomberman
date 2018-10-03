@@ -10,6 +10,7 @@ import java.awt.image.*;
 import javax.swing.JPanel;
 
 import GameState.MainMenuState;
+import Utils.FontLoader;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener {
 
@@ -26,10 +27,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private double averageFPS;
 	private int frame;
 	public static int FPS = 30;
-			
+
 	private static GamePanel instance;
+
 	public static GamePanel instance() {
-		if(instance == null) {
+		if (instance == null) {
 			GamePanel.instance = new GamePanel();
 		}
 		return GamePanel.instance;
@@ -42,11 +44,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		requestFocus();
 		addKeyListener(this);
 		this.addMouseListener(this);
-	}	
+	}
 
 	public void addNotify() {
 		super.addNotify();
-		if(thread == null) {
+		if (thread == null) {
 			thread = new Thread(this);
 			thread.start();
 		}
@@ -57,37 +59,38 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		GameManager.instance().pushState(MainMenuState.instance());
-		
+		FontLoader.loadFont();
+
 		long startTime;
 		long URDTimeMillis;
 		long waitTime;
 		long totalTime = 0;
-		
+
 		int frameCount = 0;
 		int maxFrameCount = 30;
-		
+
 		long targetTime = 1000 / FPS;
 
-		while(running) {
+		while (running) {
 			startTime = System.nanoTime();
-			
+
 			gameUpdate();
 			gameRender();
 			gameDraw();
-			
+
 			URDTimeMillis = (System.nanoTime() - startTime) / 1000000;
 			waitTime = targetTime - URDTimeMillis;
-			if(waitTime > 0) {
+			if (waitTime > 0) {
 				try {
 					Thread.sleep(waitTime);
-				}catch(InterruptedException e) {
-					
-				}				
+				} catch (InterruptedException e) {
+
+				}
 			}
 			totalTime += System.nanoTime() - startTime;
 			frameCount++;
 			frame++;
-			if(frameCount == maxFrameCount) {
+			if (frameCount == maxFrameCount) {
 				averageFPS = 1000.0 / ((totalTime / frameCount) / 1000000);
 				frameCount = 0;
 				totalTime = 0;
@@ -102,12 +105,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private void gameRender() {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		FontLoader.resetFont(g);
 
 		GameManager.instance().currentState().draw(g);
 		g.setColor(Color.red);
-		g.drawString("Frame : " + frame, 20, HEIGHT-10);
-		g.drawString("FPS : " + (int) averageFPS, 20, HEIGHT-20);
-
+		g.setFont(new Font("Arial", Font.PLAIN, 16));
+		g.drawString("Frame : " + frame, 20, HEIGHT - 10);
+		g.drawString("FPS : " + (int) averageFPS, 20, HEIGHT - 20);
 	}
 
 	private void gameDraw() {
@@ -133,18 +137,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		GameManager.instance().currentState().handleEvent(event);		
+		GameManager.instance().currentState().handleEvent(event);
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent event) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -153,6 +157,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	@Override
 	public void mouseReleased(MouseEvent event) {
-	}	
-	
+	}
+
 }

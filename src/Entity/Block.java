@@ -1,11 +1,13 @@
 package Entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
 import Entity.Bonus.Bonus;
 import Sprite.SpriteLoader;
+import Utils.FontLoader;
 
 /**
  * Class Block
@@ -53,7 +55,9 @@ public class Block extends EntityRect {
 		
 		if(type == TYPE_SPAWN) {
 			g.setColor(Color.red);
+			g.setFont(new Font("Arial",Font.PLAIN, 10));
 		    g.drawString("Spawn", this.x+5, this.y+this.height/2);			
+		    FontLoader.resetFont(g);
 		}else if(type == TYPE_RESERVED) {
 			g.setColor(Color.red);
 		    g.draw(new Line2D.Double(this.x, this.y, this.x+this.width-1, this.y+this.height-1));
