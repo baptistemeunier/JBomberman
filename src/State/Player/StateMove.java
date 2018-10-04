@@ -33,7 +33,6 @@ public abstract class StateMove implements State {
 
 	@Override
 	public void initialize() {
-		System.out.println(player.getName() + " => " + this.getClass());
 		this.update();
 	}
 

@@ -138,6 +138,17 @@ public class Map {
 		return blocks.get(x + y*NB_BLOCK_X);
 	}
 
+	public static Bomb getBomb(int caseX, int caseY) {
+		Iterator<Bomb> it = bombs.iterator();
+		while(it.hasNext()) {
+			Bomb b = it.next();
+			if(b.getCaseX() == caseX && b.getCaseY() == caseY) {
+				return b;
+			}
+		}
+		return null;
+	}
+
 	public static Block getBlockFromCoordinate(int x, int y) throws IndexOutOfBoundsException {
 		x = (int) x / PlayingState.BLOCK_SIZE;
 		y = (int) y / PlayingState.BLOCK_SIZE;

@@ -13,7 +13,7 @@ public class ExploseState extends StateBomb {
 	private int frameBeforeDelete = GamePanel.FPS;
 	private boolean haveToBeRemove = false;
 	private BombCollision bombCollision;
-
+	
 	public ExploseState(Bomb bomb) {
 		super(bomb);
 	}
@@ -33,20 +33,18 @@ public class ExploseState extends StateBomb {
 	public void update() {
 		frameBeforeDelete--;
 		if(frameBeforeDelete == 0) {
+			bomb.setNeedRemove(true);
 			haveToBeRemove = true;
 		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(Color.RED);
-		Rectangle[] rects = bombCollision.getCollisionBox();
-		g.fillRect(rects[0].x+10, rects[0].y+10, rects[0].width-20, rects[0].height-20);
-		g.fillRect(rects[1].x+10, rects[1].y+10, rects[1].width-20, rects[1].height-20);
-	}
-
-	public boolean needRemove() {
-		return haveToBeRemove;
+		Rectangle[] rects = getCollisionBox();
+		for(Rectangle r : rects) {
+			g.setColor(Color.RED);
+			g.fillRect(r.x+10, r.y+10, r.width-20, r.height-20);			
+		}
 	}
 
 	public Rectangle[] getCollisionBox() {

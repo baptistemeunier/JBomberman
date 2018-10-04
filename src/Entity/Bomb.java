@@ -22,6 +22,7 @@ public class Bomb extends Entity {
 	private StateBomb state; // State who handle the bomb's life
 
 	private boolean watingPlayerMove = true;
+	private boolean needToBeRemove = false;
 	
 	/**
 	 * Constructor
@@ -94,7 +95,12 @@ public class Bomb extends Entity {
 	 * @return true if bomb need to be remove false otherwise
 	 */
 	public boolean needToBeRemove() {
-		return this.isExplode() && ((ExploseState) state).needRemove();
+		return this.needToBeRemove;
+	}
+
+
+	public void setNeedRemove(boolean remove) {
+		this.needToBeRemove = remove;
 	}
 
 	/**
@@ -130,6 +136,13 @@ public class Bomb extends Entity {
 		if( this.getCollisionBox() != null) {
 			g.drawRect(this.getCollisionBox()[0].x, this.getCollisionBox()[0].y, this.getCollisionBox()[0].width, this.getCollisionBox()[0].height);			
 		}
+	}
+
+	public void forceExplosion() {
+		if(!isExplode()) {
+			state.transition(new ExploseState(this));			
+		}
+
 	}
 
 }

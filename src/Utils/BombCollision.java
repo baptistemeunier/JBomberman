@@ -2,16 +2,21 @@ package Utils;
 
 import GameState.PlayingState;
 import Map.Map;
+
+import java.util.ArrayList;
+
 import Entity.Block;
 import Entity.Bomb;
 
 public class BombCollision {
 
-	private Bomb bomb;
+	private Bomb bombMain;
 	private Rectangle[] collisionBox = null;
-	
+	private ArrayList<Rectangle> collisionBoxArrayList;
+	private ArrayList<Block> blocks;
+
 	public BombCollision(Bomb b) {
-		this.bomb = b;
+		this.bombMain = b;
 	}
 	
 	public Rectangle[] getCollisionBox() {
@@ -19,106 +24,78 @@ public class BombCollision {
 	}
 
 	public void createCollisionBox() {
+		blocks = new ArrayList<Block>();
+		
+		collisionBoxArrayList = new ArrayList<Rectangle>();
+		createBox(bombMain);
+		for(Block b: blocks) {
+			b.destroy();
+		}
 
-		int caseX = bomb.getCaseX();
-		int caseY = bomb.getCaseY();
-		int deep = bomb.getRange() + 1;
+		collisionBox = collisionBoxArrayList.toArray(new Rectangle[collisionBoxArrayList.size()]);
+
+	}
+
+	private void createBox(Bomb b) {
+		int deep = b.getRange() + 1;
+		
+		int r = checkSide(b, -1, 0);
+		int sizeLeft = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
 	
+		r = checkSide(b, +1, 0);
+		int sizeRight = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
+	
+		r = checkSide(b, 0, -1);
+		int sizeUp = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
+	
+		r = checkSide(b, 0, +1);
+		int sizeDown = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
+		
+		// Final step create the box
+		int x = b.getX();
+		int y = b.getY();
+
+		collisionBoxArrayList.add(new Rectangle(x-PlayingState.BLOCK_SIZE/4-sizeLeft, y-PlayingState.BLOCK_SIZE/4, PlayingState.BLOCK_SIZE+sizeLeft+sizeRight, PlayingState.BLOCK_SIZE));
+		collisionBoxArrayList.add(new Rectangle(x-PlayingState.BLOCK_SIZE/4, y-PlayingState.BLOCK_SIZE/4-sizeUp, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE+sizeUp+sizeDown));
+	}
+
+	private int checkSide(Bomb b, int dx, int dy) {
+		int caseX = b.getCaseX();
+		int caseY = b.getCaseY();
+		int deep = b.getRange() + 1;
+
 		int i = 1;
 		boolean blocked = false;
 		while(i < deep && !blocked) {
-			// checkBlock(caseX - i, caseY);
 			if(caseX-i < 0) {
 				blocked = true;
 				i--;
 			} else {
-				Block block = Map.getBlock(caseX - i, caseY);
+				Block block = Map.getBlock(caseX + dx*i, caseY + dy);
+				Bomb bomb = Map.getBomb(caseX + dx*i, caseY + dy);
+				if(bomb != null) {
+					if(!bomb.needToBeRemove() && bomb != this.bombMain) {
+						bomb.setNeedRemove(true);
+						createBox(bomb);						
+					}
+				}
 				if(block.getType() == Block.TYPE_SOLID) {
 					blocked = true;
 					i--;
 				}else if(block.getType() == Block.TYPE_WALL) {
-					block.destroy();
+					if(!blocks.contains(block) && block.getType() == Block.TYPE_WALL) {
+						blocks.add(block);						
+					}
 					blocked = true;
 				}else {
+					if(!blocks.contains(block) && block.getType() == Block.TYPE_WALL) {
+						blocks.add(block);						
+					}
 					i++;
-					block.removeBonus();
+					//block.removeBonus();
 				}
 			}
 		}
-		int sizeLeft = ((i == deep)?i-1:i)*PlayingState.BLOCK_SIZE;
-	
-		i = 1;
-		blocked = false;
-		while(i != deep && !blocked) {
-			if(caseX+i < 0) {
-				blocked = true;
-				i--;
-			} else {
-				Block block = Map.getBlock(caseX + i, caseY);
-				if(block.getType() == Block.TYPE_SOLID) {
-					blocked = true;
-					i--;
-				}else if(block.getType() == Block.TYPE_WALL) {
-					blocked = true;
-					block.destroy();
-				}else {
-					i++;
-					block.removeBonus();
-				}
-			}
-		}
-		int sizeRight = ((i == deep)?i-1:i)*PlayingState.BLOCK_SIZE;
-	
-		i = 1;
-		blocked = false;
-		while(i != deep && !blocked) {
-			if(caseY-i < 0) {
-				blocked = true;
-				i--;
-			} else {
-				Block block = Map.getBlock(caseX, caseY-i);
-				if(block.getType() == Block.TYPE_SOLID) {
-					blocked = true;
-					i--;
-				}else if(block.getType() == Block.TYPE_WALL) {
-					block.destroy();
-					blocked = true;
-				}else {
-					i++;
-					block.removeBonus();
-				}
-			}
-		}
-		int sizeUp = ((i == deep)?i-1:i)*PlayingState.BLOCK_SIZE;
-	
-		i = 1;
-		blocked = false;
-		while(i != deep && !blocked) {
-			if(caseY+i < 0) {
-				blocked = true;
-				i--;
-			} else {
-				Block block = Map.getBlock(caseX, caseY + i);
-				if(block.getType() == Block.TYPE_SOLID) {
-					blocked = true;
-					i--;
-				}else if(block.getType() == Block.TYPE_WALL) {
-					block.destroy();
-					blocked = true;
-				}else {
-					i++;
-					block.removeBonus();
-				}
-			}
-		}
-		int sizeDown = ((i == deep)?i-1:i)*PlayingState.BLOCK_SIZE;
-		
-		// Final step create the box
-		int x = bomb.getX();
-		int y = bomb.getY();
-		collisionBox = new Rectangle[2];
-		collisionBox[0] = new Rectangle(x-PlayingState.BLOCK_SIZE/4-sizeLeft, y-PlayingState.BLOCK_SIZE/4, PlayingState.BLOCK_SIZE+sizeLeft+sizeRight, PlayingState.BLOCK_SIZE);
-		collisionBox[1] = new Rectangle(x-PlayingState.BLOCK_SIZE/4, y-PlayingState.BLOCK_SIZE/4-sizeUp, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE+sizeUp+sizeDown);
+		return i;
 	}
-
 }
