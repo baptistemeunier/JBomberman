@@ -49,7 +49,7 @@ public class UpMove extends StateMove implements State {
 		if(player.getY() < 0) {
 			player.setY(0);
 		} else {
-			Entity e = Map.checkCollision(player.getCollisionBox());
+			Entity e = Map.checkCollision(player);
 			if(e != null) {
 				if(e instanceof Block) {
 					player.setY(e.getY() + ((Block )e).getHeight());

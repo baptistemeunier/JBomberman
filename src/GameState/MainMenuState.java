@@ -33,7 +33,7 @@ public class MainMenuState extends GameState {
 		menu.addItem(new MenuItem("Play", 250, 225));
 		menu.addItem(new MenuItem("Editor", 600, 225));
 		menu.addItem(new MenuItem("Setting", 250, 575));
-		menu.addItem(new MenuItem("Exit", 600, 575));
+		menu.addItem(new MenuItem("Quit", 600, 575));
 	}
 
 	@Override

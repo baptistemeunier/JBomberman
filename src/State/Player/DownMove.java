@@ -50,7 +50,7 @@ public class DownMove extends StateMove implements State {
 		if(player.getY() + player.getHeight() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
 			player.setY(Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE + player.getHeight());
 		} else {
-			Entity e = Map.checkCollision(player.getCollisionBox());
+			Entity e = Map.checkCollision(player);
 			if(e != null) {
 				if(e instanceof Block) {
 					player.setY(e.getY() - player.getHeight());

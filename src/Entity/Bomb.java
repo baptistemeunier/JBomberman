@@ -21,6 +21,8 @@ public class Bomb extends Entity {
 	private Player player; // Player who drop this bomb
 	private StateBomb state; // State who handle the bomb's life
 
+	private boolean watingPlayerMove = true;
+	
 	/**
 	 * Constructor
 	 * @param x : x coordinate of where the bomb is drop
@@ -103,6 +105,14 @@ public class Bomb extends Entity {
 		return state.getCollisionBox();
 	}
 	
+	public void setWatingPlayerMove(boolean waiting) {
+		watingPlayerMove = waiting;
+	}
+
+	public boolean isWatingPlayerMove() {
+		return watingPlayerMove;
+	}
+
 	/**
 	 * Function who update the bomb
 	 */

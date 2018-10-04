@@ -24,12 +24,15 @@ public class WaitState extends StateBomb {
 
 	@Override
 	public void release() {
-		// TODO Auto-generated method stub
 		anim = null;
 	}
 
 	@Override
 	public void update() {
+		System.out.println(bomb);
+		if(bomb.isWatingPlayerMove() && getCollisionBox() != null && !bomb.getPlayer().getCollisionBox().checkCollision(getCollisionBox()[0])) {
+			bomb.setWatingPlayerMove(false);
+		}
 		frameBeforeExplode--;
 		if(frameBeforeExplode == 0) {
 			transition(new ExploseState(bomb));

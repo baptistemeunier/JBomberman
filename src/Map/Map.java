@@ -94,32 +94,35 @@ public class Map {
 		
 	}
 
-	public static Entity checkCollision(Rectangle playerCollision) {
-		Entity b = checkBlockCollision(playerCollision);
+	public static Entity checkCollision(Player player) { //,Rectangle playerCollision) {
+		Entity b = checkBlockCollision(player);
 		if(b != null) {
 			return b;
 		}
-		b = checkBombCollision(playerCollision);
+		b = checkBombCollision(player);
 		return b;
 	}
 
-	private static Block checkBlockCollision(Rectangle playerCollision) {	
+	private static Block checkBlockCollision(Player player) {	
 		Iterator<Block> it = blocks.iterator();
 		while(it.hasNext()) {
 			Block b = it.next();
-			if(b.isWall() && b.getCollisionBox().checkCollision(playerCollision)) {
+			if(b.isWall() && b.getCollisionBox().checkCollision(player.getCollisionBox())) {
 				return b;
 			}
 		}
 		return null;
 	}
 		
-	private static Bomb checkBombCollision(Rectangle playerCollision) {	
+	private static Bomb checkBombCollision(Player player) {	
 		Iterator<Bomb> it = bombs.iterator();
 		while(it.hasNext()) {
 			Bomb b = it.next();
 			Rectangle[] collision = b.getCollisionBox();
-			if(!b.isExplode() && collision != null && collision[0].checkCollision(playerCollision)) {
+			if(!b.isExplode() && collision != null && collision[0].checkCollision(player.getCollisionBox())) {
+				if(b.isWatingPlayerMove() && b.getPlayer() == player) {
+					return null;
+				}
 				return b;
 			}
 		}

@@ -48,7 +48,7 @@ public class LeftMove extends StateMove implements State {
 		if(player.getX() < 0) {
 			player.setX(0);
 		} else {
-			Entity e = Map.checkCollision(player.getCollisionBox());
+			Entity e = Map.checkCollision(player);
 			if(e != null) {
 				if(e instanceof Block) {
 					player.setX(e.getX() + ((Block )e).getWidth());

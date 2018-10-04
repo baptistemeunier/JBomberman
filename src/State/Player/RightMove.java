@@ -50,7 +50,7 @@ public class RightMove extends StateMove implements State {
 		if(player.getX() + player.getWidth() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
 			player.setX(Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE - player.getWidth());
 		} else {
-			Entity e = Map.checkCollision(player.getCollisionBox());
+			Entity e = Map.checkCollision(player);
 			if(e != null) {
 				if(e instanceof Block) {
 					player.setX(e.getX() - player.getWidth());
