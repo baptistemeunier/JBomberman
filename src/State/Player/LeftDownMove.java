@@ -5,9 +5,9 @@ import Entity.Player;
 import State.State;
 import Utils.CheckMove;
 
-public class LeftMove extends StateMove implements State {
+public class LeftDownMove extends StateMove implements State {
 
-	public LeftMove(Player player) {
+	public LeftDownMove(Player player) {
 		super(player);
 	}
 
@@ -19,15 +19,11 @@ public class LeftMove extends StateMove implements State {
 	public void handleEvent() {
 		EventBuffer buffer = EventBuffer.instance();
 		if(buffer.isReleased(CONTROL_LEFT)) {
-			transition(new IdleMove(player));
+			transition(new DownMove(player));
 		}
-		
-		if(buffer.isPressed(CONTROL_UP)) {
-			transition(new LeftUpMove(player));
-		}
-		
-		if(buffer.isPressed(CONTROL_DOWN)) {
-			transition(new LeftDownMove(player));
+
+		if(buffer.isReleased(CONTROL_DOWN)) {
+			transition(new LeftMove(player));
 		}
 	}
 
@@ -36,5 +32,7 @@ public class LeftMove extends StateMove implements State {
 		handleEvent();
 		player.moveLeft();
 		CheckMove.checkMoveLeft(player);
+		player.moveDown();
+		CheckMove.checkMoveDown(player);
 	}
 }

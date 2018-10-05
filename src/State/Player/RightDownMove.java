@@ -5,38 +5,34 @@ import Entity.Player;
 import State.State;
 import Utils.CheckMove;
 
-public class DownMove extends StateMove implements State {
+public class RightDownMove extends StateMove implements State {
 
-	public DownMove(Player player) {
+	public RightDownMove(Player player) {
 		super(player);
 	}
 
 	@Override
 	public void release() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void handleEvent() {
 		EventBuffer buffer = EventBuffer.instance();
-		if(buffer.isReleased(CONTROL_DOWN)) {
-			transition(new IdleMove(player));
-		}
-		
-		if(buffer.isPressed(CONTROL_LEFT)) {
-			transition(new LeftDownMove(player));
+		if(buffer.isReleased(CONTROL_RIGHT)) {
+			transition(new DownMove(player));
 		}
 
-		if(buffer.isPressed(CONTROL_RIGHT)) {
-			transition(new RightDownMove(player));
+		if(buffer.isReleased(CONTROL_DOWN)) {
+			transition(new RightMove(player));
 		}
 	}
 
 	@Override
 	public void update() {
 		handleEvent();
+		player.moveRight();
+		CheckMove.checkMoveRight(player);
 		player.moveDown();
 		CheckMove.checkMoveDown(player);
 	}
-
 }

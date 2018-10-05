@@ -33,7 +33,7 @@ public abstract class StateMove implements State {
 
 	@Override
 	public void initialize() {
-		this.update();
+		update();
 	}
 
 	public void transition(State s) {
