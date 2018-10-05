@@ -1,6 +1,5 @@
 package Menu;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -18,13 +17,10 @@ public class FreeMenu {
 		items.add(item);
 	}
 
-	public String checkItem(AWTEvent event) {
-		if(event.getID() == MouseEvent.MOUSE_CLICKED) {
-			MouseEvent mEvent = (MouseEvent) event;
-			for (MenuItem item: items) {
-				if(item.getBox().checkPoint(mEvent.getX(), mEvent.getY())) {
-					return item.getName();
-				}
+	public String checkItem(MouseEvent event) {
+		for (MenuItem item: items) {
+			if(item.getBox().checkPoint(event.getX(), event.getY())) {
+				return item.getName();
 			}
 		}
 		return null;

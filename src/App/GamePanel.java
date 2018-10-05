@@ -1,10 +1,6 @@
 package App;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.*;
 
 import javax.swing.JPanel;
@@ -12,7 +8,7 @@ import javax.swing.JPanel;
 import GameState.MainMenuState;
 import Utils.FontLoader;
 
-public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener {
+public class GamePanel extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = -6496354673243986202L;
 
@@ -42,8 +38,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
-		addKeyListener(this);
-		this.addMouseListener(this);
+		addKeyListener(EventBuffer.instance());
+		addMouseListener(EventBuffer.instance());
 	}
 
 	public void addNotify() {
@@ -100,6 +96,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	private void gameUpdate() {
 		GameManager.instance().currentState().update();
+		EventBuffer.instance().clear();
 	}
 
 	private void gameRender() {
@@ -118,45 +115,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		Graphics g2 = this.getGraphics();
 		g2.drawImage(image, 0, 0, null);
 		g2.dispose();
-	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		GameManager.instance().currentState().handleEvent(arg0);
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		GameManager.instance().currentState().handleEvent(arg0);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		GameManager.instance().currentState().handleEvent(arg0);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent event) {
-		GameManager.instance().currentState().handleEvent(event);
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent event) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent event) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent event) {
 	}
 
 }

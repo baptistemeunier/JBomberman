@@ -1,9 +1,10 @@
 package GameState;
 
-import java.awt.AWTEvent;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import App.EventBuffer;
 import App.GameManager;
 import App.GamePanel;
 import Entity.Bomb;
@@ -53,7 +54,17 @@ public class MainMenuState extends GameState {
 
 	@Override
 	public void update() {
-
+		MouseEvent event = EventBuffer.instance().isClicked(MouseEvent.BUTTON1);
+		if(event != null) {
+			String choice = menu.checkItem(event);
+			if(choice == "Play") {
+				GameManager.instance().pushState(PlayingState.instance());			
+			} else if(choice == "Editor") {
+				GameManager.instance().pushState(MapEditorState.instance());
+			} else if(choice == "Quit") {
+				System.exit(0);
+			}			
+		}
 	}
 
 	@Override
@@ -81,15 +92,4 @@ public class MainMenuState extends GameState {
 
 	}
 
-	@Override
-	public void handleEvent(AWTEvent event) {	
-		String choice = menu.checkItem(event);
-		if(choice == "Play") {
-			GameManager.instance().pushState(PlayingState.instance());			
-		} else if(choice == "Editor") {
-			GameManager.instance().pushState(MapEditorState.instance());
-		} else if(choice == "Exit") {
-			System.exit(0);
-		}
-	}
 }

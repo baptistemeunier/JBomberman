@@ -1,12 +1,10 @@
 package GameState;
 
-import java.awt.AWTEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -114,7 +112,7 @@ public class EndingState extends GameState {
 		winner = name;
 	}
 
-	@Override
+	/*
 	public void handleEvent(AWTEvent event) {
 		if(event.getID() == KeyEvent.KEY_PRESSED) {
 			int keyCode = ((KeyEvent) event).getKeyCode();
@@ -137,7 +135,7 @@ public class EndingState extends GameState {
 				choice = currentChoice;
 			}
 		}		
-	}
+	}*/
 
 	public void setLastFrame(BufferedImage image) {
 		lastFrame = image;

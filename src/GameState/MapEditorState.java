@@ -1,6 +1,5 @@
 package GameState;
 
-import java.awt.AWTEvent;
 import java.awt.Graphics2D;
 
 import Entity.Block;
@@ -51,11 +50,6 @@ public class MapEditorState extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 		state.draw(g);
-	}
-
-	@Override
-	public void handleEvent(AWTEvent event) {
-		state.handleEvent(event);
 	}
 
 	public void setState(BasicState state) {
