@@ -38,4 +38,13 @@ public class Rectangle {
 	public void draw(Graphics2D g) {
 		g.drawRect(x, y, width, height);
 	}
+
+	public boolean checkCollision(Rectangle[] rects) {
+		for(int i = 0; i < rects.length; i++) {
+			if(checkCollision(rects[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

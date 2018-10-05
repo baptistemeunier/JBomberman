@@ -3,10 +3,9 @@ package Entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import GameState.PlayingState;
 import State.Bomb.*;
 import Utils.Rectangle;
-
+import Map.Map;
 /**
  * Class Bomb
  * This class is use to represents a bomb
@@ -14,9 +13,6 @@ import Utils.Rectangle;
  */
 public class Bomb extends Entity {
 
-	private int caseX; // Case of the bomb
-	private int caseY;
-	
 	private int range; // Range of explosion
 	private Player player; // Player who drop this bomb
 	private StateBomb state; // State who handle the bomb's life
@@ -31,13 +27,11 @@ public class Bomb extends Entity {
 	 * @param player PLayer who drop the bomb
 	 */
 	public Bomb(int x, int y, Player player) {
+		super(x, y);
 		this.range = player.getRange();
 		this.player = player;
-		caseX = (int) x / PlayingState.BLOCK_SIZE;
-		caseY = (int) y / PlayingState.BLOCK_SIZE;
-		this.x = caseX * PlayingState.BLOCK_SIZE + PlayingState.BLOCK_SIZE/4;
-		this.y = caseY * PlayingState.BLOCK_SIZE + PlayingState.BLOCK_SIZE/4;
-
+		this.x = caseX * Map.BLOCK_SIZE + Map.BLOCK_SIZE/4;
+		this.y = caseY * Map.BLOCK_SIZE + Map.BLOCK_SIZE/4;
 		state = new WaitState(this);
 		state.initialize();
 	}
@@ -99,8 +93,9 @@ public class Bomb extends Entity {
 	}
 
 
-	public void setNeedRemove(boolean remove) {
-		this.needToBeRemove = remove;
+	public void markForRemove() {
+		player.addBomb();
+		this.needToBeRemove = true;
 	}
 
 	/**

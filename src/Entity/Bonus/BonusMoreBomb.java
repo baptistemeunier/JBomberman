@@ -14,7 +14,7 @@ public class BonusMoreBomb extends Bonus {
 	}
 
 	@Override
-	public void launchAnimation() {
+	public void reveal() {
 		animation = new BonusAnimation("bomb");
 		Animation.AnimationManager.instance().add(animation);		
 	}

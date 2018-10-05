@@ -5,6 +5,7 @@ import Map.Map;
 
 import java.util.ArrayList;
 
+import App.Game;
 import Entity.Block;
 import Entity.Bomb;
 
@@ -28,8 +29,12 @@ public class BombCollision {
 		
 		collisionBoxArrayList = new ArrayList<Rectangle>();
 		createBox(bombMain);
-		for(Block b: blocks) {
-			b.destroy();
+		for(Block block: blocks) {
+			if(block.getType() == Block.TYPE_WALL) {
+				block.destroy();
+			}else {
+				Game.instance().removeBonus(block.getCaseX(), block.getCaseY());				
+			}
 		}
 
 		collisionBox = collisionBoxArrayList.toArray(new Rectangle[collisionBoxArrayList.size()]);
@@ -72,10 +77,10 @@ public class BombCollision {
 				i--;
 			} else {
 				Block block = Map.getBlock(caseX + dx*i, caseY + dy);
-				Bomb bomb = Map.getBomb(caseX + dx*i, caseY + dy);
+				Bomb bomb = Game.instance().getBomb(caseX, caseY);
 				if(bomb != null) {
 					if(!bomb.needToBeRemove() && bomb != this.bombMain) {
-						bomb.setNeedRemove(true);
+						bomb.markForRemove();
 						createBox(bomb);						
 					}
 				}
@@ -83,16 +88,15 @@ public class BombCollision {
 					blocked = true;
 					i--;
 				}else if(block.getType() == Block.TYPE_WALL) {
-					if(!blocks.contains(block) && block.getType() == Block.TYPE_WALL) {
+					if(!blocks.contains(block)) {
 						blocks.add(block);						
 					}
 					blocked = true;
 				}else {
-					if(!blocks.contains(block) && block.getType() == Block.TYPE_WALL) {
+					if(!blocks.contains(block)) {
 						blocks.add(block);						
 					}
 					i++;
-					//block.removeBonus();
 				}
 			}
 		}

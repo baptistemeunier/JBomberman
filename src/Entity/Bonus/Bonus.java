@@ -28,9 +28,15 @@ public abstract class Bonus extends EntityRect{
 		}
 	}
 
-	public abstract void launchAnimation();
+	public abstract void reveal();
 	
-	public void draw(Graphics2D g) {
+	public void update() {
+		if(animation != null) {
+			animation.tic();			
+		}
+	}
+	
+ 	public void draw(Graphics2D g) {
 		if(animation != null) {
 			g.drawImage(animation.getFrame(), x, y, width, height, null, null);			
 		}

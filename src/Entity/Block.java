@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import Entity.Bonus.Bonus;
+import App.Game;
 import Sprite.SpriteLoader;
 import Utils.FontLoader;
 
@@ -22,8 +22,6 @@ public class Block extends EntityRect {
 	public static final int TYPE_SPAWN = 51;
 	public static final int TYPE_RESERVED = 52;	
 	private int type; // Type of current tile
-
-	private Bonus bonus = null; // Bonus on the tile (if exist)
 
 	/**
 	 * Constructor
@@ -51,21 +49,17 @@ public class Block extends EntityRect {
 		}else {
 			g.drawImage(sl.getStrite("tiles", "grass"), this.x, this.y, this.width, this.height, null, null);
 		}
-		
-		
+
 		if(type == TYPE_SPAWN) {
 			g.setColor(Color.red);
+			g.drawRect(this.x, this.y, this.width-1, this.height-1);
 			g.setFont(new Font("Arial",Font.PLAIN, 10));
-		    g.drawString("Spawn", this.x+5, this.y+this.height/2);			
+		    g.drawString("Spawn", this.x+5, this.y+this.height/2);
 		    FontLoader.resetFont(g);
 		}else if(type == TYPE_RESERVED) {
 			g.setColor(Color.red);
 		    g.draw(new Line2D.Double(this.x, this.y, this.x+this.width-1, this.y+this.height-1));
 		    g.draw(new Line2D.Double(this.x+this.width-1, this.y, this.x, this.y+this.height-1));
-		}
-		
-		if(type == TYPE_EMPTY && bonus != null) {
-			bonus.draw(g);
 		}
 	}
 
@@ -86,41 +80,12 @@ public class Block extends EntityRect {
 	}
 
 	/**
-	 * Get the tile bonus
-	 * @return The bonus of the tile
-	 */
-	public Bonus getBonus() {
-		return this.bonus;
-	}
-
-	/**
-	 * Change the tile bonus
-	 * @param Bonus bonus The new bonus
-	 */
-	public void setBonus(Bonus bonus) {
-		this.bonus = bonus;
-	}
-
-	/**
-	 * Remove the tile bonus
-	 */
-	public void removeBonus() {
-		if(bonus != null) {
-			bonus.remove();
-			bonus = null;			
-		}
-		
-	}
-
-	/**
 	 * Destroy the tile (i.e set the type to empty type)
 	 * Use when the tile is break by a bomb (for example)
 	 */
 	public void destroy() {
 		this.type = TYPE_EMPTY;
-		if(bonus != null) {
-			bonus.launchAnimation();
-		}
+		Game.instance().revealBonus(caseX, caseY);
 	}
 
 	public boolean isWall() {

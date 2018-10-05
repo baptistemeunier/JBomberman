@@ -1,6 +1,7 @@
 package Entity.Bonus;
 
 import Animation.BonusAnimation;
+import App.Game;
 import Entity.Player;
 
 public class BonusDeath extends Bonus {
@@ -10,10 +11,10 @@ public class BonusDeath extends Bonus {
 	}
 	
 	public void updatePlayer(Player player) {
-		player.kill();
+		Game.instance().removePlayer(player);
 	}
 
-	public void launchAnimation() {
+	public void reveal() {
 		animation = new BonusAnimation("death");
 		Animation.AnimationManager.instance().add(animation);
 	}

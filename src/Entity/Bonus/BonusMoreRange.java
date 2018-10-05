@@ -13,7 +13,7 @@ public class BonusMoreRange extends Bonus {
 		player.addRange();
 	}
 
-	public void launchAnimation() {
+	public void reveal() {
 		animation = new BonusAnimation("range");
 		Animation.AnimationManager.instance().add(animation);
 	}

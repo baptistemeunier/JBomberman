@@ -27,7 +27,7 @@ public class Map {
 	public static void generateMap(Game g) throws Exception {
 		blocks = generateLayout(blocks);
 		game = g;
-		ArrayList<Block> blocksWall = generateWall(blocks);
+		ArrayList<Block> blocksWall = generateWall();
 		generateBonus(blocksWall);
 	}
 	
@@ -51,8 +51,7 @@ public class Map {
 	 * @return The Block list
 	 */
 	private static ArrayList<Block> generateLayout(ArrayList<Block> blocks) {
-		//MapFile file = new MapFile("basic");
-		MapFile file = new MapFile("empty");
+		MapFile file = new MapFile("basic");
 		blocks = file.load();
 		return blocks;
 	}
@@ -61,7 +60,7 @@ public class Map {
 	 * Put random wall in the playground
 	 * @return The Block list
 	 */
-	private static ArrayList<Block> generateWall(ArrayList<Block> blocks) {
+	private static ArrayList<Block> generateWall() {
 		ArrayList<Block> blocksEmpty = new ArrayList<Block>();
 		ArrayList<Block> blocksWall = new ArrayList<Block>();
 		Iterator<Block> it = blocks.iterator();

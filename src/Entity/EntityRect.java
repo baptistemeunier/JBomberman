@@ -10,6 +10,7 @@ public class EntityRect extends Entity {
 	protected int height;
 
 	public EntityRect(int x, int y, int width, int height) {
+		super(x, y);
 		this.x = x;
 		this.y = y;
 		this.width = width;

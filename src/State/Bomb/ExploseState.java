@@ -11,7 +11,6 @@ import Utils.Rectangle;
 public class ExploseState extends StateBomb {
 
 	private int frameBeforeDelete = GamePanel.FPS;
-	private boolean haveToBeRemove = false;
 	private BombCollision bombCollision;
 	
 	public ExploseState(Bomb bomb) {
@@ -33,8 +32,7 @@ public class ExploseState extends StateBomb {
 	public void update() {
 		frameBeforeDelete--;
 		if(frameBeforeDelete == 0) {
-			bomb.setNeedRemove(true);
-			haveToBeRemove = true;
+			bomb.markForRemove();
 		}
 	}
 

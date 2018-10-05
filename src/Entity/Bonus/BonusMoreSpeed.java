@@ -14,7 +14,7 @@ public class BonusMoreSpeed extends Bonus {
 	}
 
 	@Override
-	public void launchAnimation() {
+	public void reveal() {
 		animation = new BonusAnimation("speed");
 		Animation.AnimationManager.instance().add(animation);		
 	}

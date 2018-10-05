@@ -2,6 +2,8 @@ package Entity;
 
 import java.awt.Graphics2D;
 
+import GameState.PlayingState;
+
 
 /**
  * Class Entity
@@ -13,6 +15,13 @@ public abstract class Entity {
 
 	protected int x;
 	protected int y;
+	protected int caseX;
+	protected int caseY;
+
+	Entity(int x, int y) {
+		caseX = (int) x / PlayingState.BLOCK_SIZE;
+		caseY = (int) y / PlayingState.BLOCK_SIZE;
+	}
 
 	/**
 	 * Get the x coordinate
@@ -44,6 +53,22 @@ public abstract class Entity {
 	 */
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public int getCaseX() {
+		return caseX;
+	}
+	
+	public void setCaseX(int caseX) {
+		this.caseX = caseX;
+	}
+	
+	public int getCaseY() {
+		return caseY;
+	}
+	
+	public void setCaseY(int caseY) {
+		this.caseY = caseY;
 	}
 
 	/**

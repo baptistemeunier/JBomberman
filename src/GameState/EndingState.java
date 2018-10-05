@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import App.EventBuffer;
 import App.GameManager;
 import App.GamePanel;
 import Map.Map;
@@ -60,6 +62,7 @@ public class EndingState extends GameState {
 
 	@Override
 	public void update() {
+		handleEvent();
 		if(choice != -1) {
 			if (choice == 1) {
 				GameManager.instance().popState();
@@ -112,30 +115,22 @@ public class EndingState extends GameState {
 		winner = name;
 	}
 
-	/*
-	public void handleEvent(AWTEvent event) {
-		if(event.getID() == KeyEvent.KEY_PRESSED) {
-			int keyCode = ((KeyEvent) event).getKeyCode();
-			if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_Q)  {
-				currentChoice--;
-				if(currentChoice < 0) {
-					currentChoice = menuSelection.size()-1;
-				}
-			}
-			else if(keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D)  {
-				currentChoice++;
-				if(currentChoice == menuSelection.size()) {
-					currentChoice = 0;
-				}
+	public void handleEvent() {
+		if(EventBuffer.instance().isPressed(KeyEvent.VK_LEFT) || EventBuffer.instance().isPressed(KeyEvent.VK_Q)) {
+			currentChoice--;
+			if(currentChoice < 0) {
+				currentChoice = menuSelection.size()-1;
 			}
 		}
-		if(event.getID() == KeyEvent.KEY_RELEASED) {
-			int keyCode = ((KeyEvent) event).getKeyCode();
-			if(keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_ENTER)  {
-				choice = currentChoice;
+		else if(EventBuffer.instance().isPressed(KeyEvent.VK_RIGHT) || EventBuffer.instance().isPressed(KeyEvent.VK_D)) {
+			currentChoice++;
+			if(currentChoice == menuSelection.size()) {
+				currentChoice = 0;
 			}
+		}else if(EventBuffer.instance().isReleased(KeyEvent.VK_SPACE) || EventBuffer.instance().isReleased(KeyEvent.VK_ENTER)) {
+				choice = currentChoice;
 		}		
-	}*/
+	}
 
 	public void setLastFrame(BufferedImage image) {
 		lastFrame = image;

@@ -1,11 +1,11 @@
 package Entity;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import Map.Map;
+import App.EventBuffer;
+import App.Game;
 import State.Player.IdleMove;
 import State.Player.StateMove;
 
@@ -13,9 +13,10 @@ public class Player extends EntityRect {
 
 	private int speed = 5;
 	private String name;
-	private boolean alive = true;
 
+	@SuppressWarnings("unused")
 	private int nb_bombs;
+	@SuppressWarnings("unused")
 	private int maxBomb = 5;
 	private int range = 1;
 
@@ -71,26 +72,27 @@ public class Player extends EntityRect {
 	}
 	
 	public void dropBomb() {
-		if(this.alive && nb_bombs != maxBomb) {
-			Map.addBomb(x+width/4, y+height/4, this);
-			nb_bombs++;
+		if(Game.instance().addBomb(new Bomb(x+width/4, y+height/4, this))) {
+			nb_bombs++;		
 		}
 	}
 	
 	public void update() {
- 		if(this.alive) {
- 			stateMove.update();
-			Map.checkBlockBonus(this);
- 		}
+		if(EventBuffer.instance().isReleased(KeyEvent.VK_SPACE) && name == "Player 1") {
+			this.dropBomb();
+		}
+ 		if(EventBuffer.instance().isReleased(KeyEvent.VK_A) && name == "Player 2") {
+ 			this.dropBomb();
+		}
+		stateMove.update();
+		//Map.checkBlockBonus(this);
 	}
 	
 	public void draw(Graphics2D g) {
-		if(this.alive) {
-			g.setColor(Color.BLUE);
-			g.fillRect(this.x, this.y, this.width, this.height);
-			g.setColor(Color.RED);
-			g.fillRect(this.x + this.width/4, this.y + this.height/4, this.width/2, this.height/2);
-		}
+		g.setColor(Color.BLUE);
+		g.fillRect(this.x, this.y, this.width, this.height);
+		g.setColor(Color.RED);
+		g.fillRect(this.x + this.width/4, this.y + this.height/4, this.width/2, this.height/2);
 	}
 
 	public void addRange() {
@@ -111,27 +113,6 @@ public class Player extends EntityRect {
 
 	public String getName() {
 		return name;
-	}
-
-	public void kill() {
-		this.alive = false;
-	}
-
-	public boolean isAlive() {
-		return this.alive;
-	}
-
-	public void handleEvent(AWTEvent event) {
-		if(event.getID() == KeyEvent.KEY_RELEASED) {
-			int keyCode = ((KeyEvent) event).getKeyCode();
-			if(keyCode == KeyEvent.VK_SPACE && name == "Player 1")  {
-				this.dropBomb();
-			}
-			if(keyCode == KeyEvent.VK_A && name == "Player 2")  {
-				this.dropBomb();
-			}
-		}
-		this.stateMove.handleEvent(event);
 	}
 
 	public void setStateMove(StateMove s) {
