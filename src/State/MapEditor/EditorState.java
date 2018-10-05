@@ -1,12 +1,12 @@
 package State.MapEditor;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
+import App.EventBuffer;
 import App.GamePanel;
 import Entity.Block;
 import GameState.PlayingState;
@@ -27,11 +27,11 @@ public class EditorState extends BasicState {
 
 	}
 
-	@Override
-	public void handleEvent(AWTEvent event) {
-		if(event.getID() == MouseEvent.MOUSE_CLICKED) {
-			int x = ((MouseEvent) event).getX();
-			int y = ((MouseEvent) event).getY();
+	public void update() {
+		MouseEvent mEvent = EventBuffer.instance().getMouseState(MouseEvent.BUTTON1);
+		if(mEvent != null && mEvent.getID() == MouseEvent.MOUSE_CLICKED) {
+			int x = mEvent.getX();
+			int y = mEvent.getY();
 			if(x > GamePanel.WIDTH/2 && x < (GamePanel.WIDTH/2 + 170)
 					&&  y > Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE+20 && y < (Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE+20 + 40)) {
 				System.out.println("Created !!");
@@ -68,9 +68,6 @@ public class EditorState extends BasicState {
 		}
 	}
 
-	public void update() {
-		
-	}
 	@Override
 	public void draw(Graphics2D g) {
 		editor.draw(g);

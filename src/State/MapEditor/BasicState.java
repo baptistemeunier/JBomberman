@@ -1,7 +1,5 @@
 package State.MapEditor;
 
-import java.awt.AWTEvent;
-
 import Map.MapEditor;
 import State.State;
 
@@ -16,18 +14,6 @@ public abstract class BasicState implements State {
 
 	@Override
 	public void release() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void handleEvent(AWTEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

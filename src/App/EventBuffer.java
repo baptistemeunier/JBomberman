@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class EventBuffer implements KeyListener, MouseListener {
@@ -114,6 +115,11 @@ public class EventBuffer implements KeyListener, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		
+	}
+
+	public Collection<KeyEvent> getKeyEvents() {
+		// TODO Auto-generated method stub
+		return keyEvents.values();
 	}
 
 }

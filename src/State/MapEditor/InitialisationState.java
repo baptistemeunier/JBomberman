@@ -1,12 +1,12 @@
 package State.MapEditor;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import App.EventBuffer;
 import App.GameManager;
 import GameState.MapEditorState;
 import Map.Map;
@@ -35,15 +35,15 @@ public class InitialisationState extends BasicState {
 		file.setWidth(width);
 		file.setHeight(height);
 		editor.setFile(file);
-		MapEditorState.instance().setState((BasicState) s);
+		MapEditorState.instance().setState(bs);
 		bs.setEditor(this.editor);
 		bs.initialize();
 	}
 
 	@Override
-	public void handleEvent(AWTEvent event) {
-		if(event.getID() == MouseEvent.MOUSE_CLICKED) {
-			MouseEvent mEvent = (MouseEvent) event;
+	public void update() {
+		MouseEvent mEvent = EventBuffer.instance().getMouseState(MouseEvent.BUTTON1);
+		if(mEvent != null) {
 			if(mEvent.getY() > 570 && mEvent.getY() < 610) {
 				if(mEvent.getX() > 300 && mEvent.getX() < 520) {
 					transition(new EditorState());
@@ -66,16 +66,19 @@ public class InitialisationState extends BasicState {
 					height++;
 				}
 			}
-		} else if(event.getID() == KeyEvent.KEY_RELEASED) {
-			int key = ((KeyEvent) event).getKeyCode();
-			if(key == KeyEvent.VK_BACK_SPACE && name != null && name.length() > 0) {
-			        name = name.substring(0, name.length() - 1);
-			} else if(key == KeyEvent.VK_ENTER && name != null && name.length() > 0) {
-				editor.save();
-			} else {
-				char c = ((KeyEvent) event).getKeyChar();
-				name += c;
-			}			
+		}
+		for(KeyEvent event : EventBuffer.instance().getKeyEvents()) {
+			if(event != null && event.getID() == KeyEvent.KEY_RELEASED) {
+				int key = ((KeyEvent) event).getKeyCode();
+				if(key == KeyEvent.VK_BACK_SPACE && name != null && name.length() > 0) {
+				        name = name.substring(0, name.length() - 1);
+				} else if(key == KeyEvent.VK_ENTER && name != null && name.length() > 0) {
+					editor.save();
+				} else {
+					char c = ((KeyEvent) event).getKeyChar();
+					name += c;
+				}			
+			}
 		}
 	}
 
