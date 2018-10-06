@@ -56,12 +56,12 @@ public class Game {
 	public void update() {
 		// 0 : Check end game
 		if(players.size() <= 1) {
-			Player player = null;
+			String name = null;
 			if(!players.isEmpty()) {
-				player = players.get(0);
+				name = players.get(0).getName();
 			}
 
-			EndingState.instance().setWinnerName(player.getName());
+			EndingState.instance().setWinnerName(name);
 			EndingState.instance().setLastFrame(PlayingState.instance().drawLastFrame());
 			GameManager.instance().setState(EndingState.instance());
 		}
@@ -85,12 +85,12 @@ public class Game {
 			}
 			bomb.update();
 			Rectangle[] rects = bomb.getCollisionBox();
-			if(rects != null) {
+			if(bomb.isExplode() && rects != null) {
 				Iterator<Player> it = players.iterator();
 				while(it.hasNext()) {
 					Player player = it.next();
 					if(player.getCollisionBox().checkCollision(rects)) {
-						removePlayer(player);
+						it.remove();
 					}
 				}
 			}
@@ -159,11 +159,10 @@ public class Game {
 	private Bomb checkBombCollision(Player player) {	
 		for(Bomb b : bombs.values()) {
 			Rectangle[] collision = b.getCollisionBox();
-			if(!b.isExplode() && collision != null && collision[0].checkCollision(player.getCollisionBox())
-			&& b.isWatingPlayerMove() && b.getPlayer() == player) {
-				return null;
+			if(!b.isExplode() && player.getCollisionBox().checkCollision(collision)) {
+				//&& b.isWatingPlayerMove() && b.getPlayer() == player) {
+				return b;
 			}
-			return b;
 		}
 		return null;
 	}

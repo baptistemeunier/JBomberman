@@ -51,7 +51,7 @@ public class Map {
 	 * @return The Block list
 	 */
 	private static ArrayList<Block> generateLayout(ArrayList<Block> blocks) {
-		MapFile file = new MapFile("basic");
+		MapFile file = new MapFile("empty");
 		blocks = file.load();
 		return blocks;
 	}

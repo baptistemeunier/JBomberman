@@ -29,6 +29,7 @@ public class WaitState extends StateBomb {
 
 	@Override
 	public void update() {
+		anim.tic();
 		if(bomb.isWatingPlayerMove() && getCollisionBox() != null && !bomb.getPlayer().getCollisionBox().checkCollision(getCollisionBox()[0])) {
 			bomb.setWatingPlayerMove(false);
 		}

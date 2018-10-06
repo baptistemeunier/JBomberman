@@ -2,6 +2,7 @@ package Utils;
 
 import App.Game;
 import Entity.Block;
+import Entity.Bomb;
 import Entity.Entity;
 import Entity.Player;
 import GameState.PlayingState;
@@ -12,9 +13,12 @@ public class CheckMove {
 		if(player.getX() < 0) {
 			player.setX(0);
 		} else {
-			Entity entity = checkCollision(player);
-			if(entity != null) {
+			Entity entity = Game.instance().checkCollision(player);
+			if(entity instanceof Block) {
 				player.setX(entity.getX() + ((Block )entity).getWidth());
+			}
+			if(entity instanceof Bomb) {
+				player.moveRight();
 			}
 		}
 	}
@@ -23,9 +27,12 @@ public class CheckMove {
 		if(player.getX() + player.getWidth() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
 			player.setX(Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE - player.getWidth());
 		} else {
-			Entity entity = checkCollision(player);
-			if(entity != null) {
+			Entity entity = Game.instance().checkCollision(player);
+			if(entity instanceof Block) {
 				player.setX(entity.getX() - player.getWidth());
+			}
+			if(entity instanceof Bomb) {
+				player.moveLeft();
 			}
 		}
 	}
@@ -34,9 +41,12 @@ public class CheckMove {
 		if(player.getY() < 0) {
 			player.setY(0);
 		} else {
-			Entity entity = checkCollision(player);
-			if(entity != null) {
+			Entity entity = Game.instance().checkCollision(player);
+			if(entity instanceof Block) {
 				player.setY(entity.getY() + ((Block )entity).getHeight());
+			}
+			if(entity instanceof Bomb) {
+				player.moveDown();
 			}
 		}
 	}
@@ -45,18 +55,14 @@ public class CheckMove {
 		if(player.getY() + player.getHeight() >= Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE) {
 			player.setY(Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE - player.getHeight());
 		} else {
-			Entity entity = checkCollision(player);
-			if(entity != null) {
+			Entity entity = Game.instance().checkCollision(player);
+			if(entity instanceof Block) {
 				player.setY(entity.getY() - player.getHeight());
+			}
+			if(entity instanceof Bomb) {
+				player.moveLeft();
 			}
 		}
 	}
 	
-	public static Entity checkCollision(Player player) {
-		Entity entity = Game.instance().checkCollision(player);
-		if(entity != null && entity instanceof Block) {
-			return entity;
-		}
-		return null;
-	}
 }

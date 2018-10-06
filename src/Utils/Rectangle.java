@@ -16,6 +16,8 @@ public class Rectangle {
 	}
 	
 	public boolean checkCollision(Rectangle rect1) {
+		if(rect1 == null) 
+			return false;
 		if(rect1.x < x + width &&
 				rect1.x + rect1.width > x &&
 				rect1.y < y + height &&
@@ -40,6 +42,8 @@ public class Rectangle {
 	}
 
 	public boolean checkCollision(Rectangle[] rects) {
+		if(rects == null) 
+			return false;
 		for(int i = 0; i < rects.length; i++) {
 			if(checkCollision(rects[i])) {
 				return true;
