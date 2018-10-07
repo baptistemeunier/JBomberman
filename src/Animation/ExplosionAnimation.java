@@ -44,7 +44,7 @@ public class ExplosionAnimation implements Animation {
 
 	@Override
 	public boolean isFinish() {
-		return state == 5 && frameNb == changeFrameInterval;
+		return state == 5;
 	}
 
 	public void drawFrame(Graphics2D g) {

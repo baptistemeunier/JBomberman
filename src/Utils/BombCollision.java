@@ -24,7 +24,6 @@ public class BombCollision {
 
 	public void createCollisionBox() {
 		blocks = new ArrayList<Block>();
-		
 		collisionBoxArrayList = new ArrayList<Rectangle>();
 		createBox(bombMain);
 		for(Block block: blocks) {
@@ -68,6 +67,7 @@ public class BombCollision {
 	}
 
 	private int checkSide(Bomb b, int dx, int dy) {
+		System.out.println("Case main : " + b.getCaseX() + "," + b.getCaseY());
 		int caseX = b.getCaseX();
 		int caseY = b.getCaseY();
 		int deep = b.getRange() + 1;
@@ -80,7 +80,7 @@ public class BombCollision {
 				i--;
 			} else {
 				Block block = Map.getBlock(caseX + dx*i, caseY + dy);
-				Bomb bomb = Game.instance().getBomb(caseX, caseY);
+				Bomb bomb = Game.instance().getBomb(caseX + dx*i, caseY + dy);
 				if(bomb != null) {
 					if(!bomb.needToBeRemove() && bomb != this.bombMain) {
 						bomb.markForRemove();
@@ -107,7 +107,6 @@ public class BombCollision {
 	}
 
 	public ArrayList<Block> getBlocks() {
-		// TODO Auto-generated method stub
 		return blocks;
 	}
 

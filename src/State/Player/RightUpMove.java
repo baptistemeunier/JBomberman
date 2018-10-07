@@ -22,7 +22,7 @@ public class RightUpMove extends StateMove implements State {
 			transition(new UpMove(player));
 		}
 
-		if(buffer.isReleased(CONTROL_DOWN)) {
+		if(buffer.isReleased(CONTROL_UP)) {
 			transition(new RightMove(player));
 		}
 	}
