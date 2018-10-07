@@ -10,8 +10,6 @@ import Map.Map;
 
 public class PlayingState extends GameState {
 
-	public static int BLOCK_SIZE = 50;
-
 	ArrayList<Player> players;
 
 	private static PlayingState instance;
@@ -48,7 +46,7 @@ public class PlayingState extends GameState {
 	}
 
 	public BufferedImage drawLastFrame() {
-		BufferedImage image = new BufferedImage(BLOCK_SIZE*Map.NB_BLOCK_X, BLOCK_SIZE*Map.NB_BLOCK_Y, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(Map.BLOCK_SIZE_X*Map.NB_BLOCK_X, Map.BLOCK_SIZE_Y*Map.NB_BLOCK_Y, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		draw(g);
 		return image;

@@ -1,8 +1,6 @@
 package Utils;
 
-import GameState.PlayingState;
 import Map.Map;
-
 import java.util.ArrayList;
 
 import App.Game;
@@ -44,24 +42,29 @@ public class BombCollision {
 	private void createBox(Bomb b) {
 		int deep = b.getRange() + 1;
 		
+		Block block = Map.getBlock(b.getCaseX(), b.getCaseY());
+		if(!blocks.contains(block)) {
+			blocks.add(block);						
+		}
+
 		int r = checkSide(b, -1, 0);
-		int sizeLeft = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
+		int sizeLeft = ((r == deep)?r-1:r)*Map.BLOCK_SIZE_X;
 	
 		r = checkSide(b, +1, 0);
-		int sizeRight = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
+		int sizeRight = ((r == deep)?r-1:r)*Map.BLOCK_SIZE_X;
 	
 		r = checkSide(b, 0, -1);
-		int sizeUp = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
+		int sizeUp = ((r == deep)?r-1:r)*Map.BLOCK_SIZE_Y;
 	
 		r = checkSide(b, 0, +1);
-		int sizeDown = ((r == deep)?r-1:r)*PlayingState.BLOCK_SIZE;
+		int sizeDown = ((r == deep)?r-1:r)*Map.BLOCK_SIZE_Y;
 		
 		// Final step create the box
 		int x = b.getX();
 		int y = b.getY();
 
-		collisionBoxArrayList.add(new Rectangle(x-PlayingState.BLOCK_SIZE/4-sizeLeft, y-PlayingState.BLOCK_SIZE/4, PlayingState.BLOCK_SIZE+sizeLeft+sizeRight, PlayingState.BLOCK_SIZE));
-		collisionBoxArrayList.add(new Rectangle(x-PlayingState.BLOCK_SIZE/4, y-PlayingState.BLOCK_SIZE/4-sizeUp, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE+sizeUp+sizeDown));
+		collisionBoxArrayList.add(new Rectangle(x-Map.BLOCK_SIZE_X/4-sizeLeft, y-Map.BLOCK_SIZE_Y/4, Map.BLOCK_SIZE_X+sizeLeft+sizeRight, Map.BLOCK_SIZE_Y));
+		collisionBoxArrayList.add(new Rectangle(x-Map.BLOCK_SIZE_X/4, y-Map.BLOCK_SIZE_Y/4-sizeUp, Map.BLOCK_SIZE_X, Map.BLOCK_SIZE_Y+sizeUp+sizeDown));
 	}
 
 	private int checkSide(Bomb b, int dx, int dy) {
@@ -102,4 +105,10 @@ public class BombCollision {
 		}
 		return i;
 	}
+
+	public ArrayList<Block> getBlocks() {
+		// TODO Auto-generated method stub
+		return blocks;
+	}
+
 }

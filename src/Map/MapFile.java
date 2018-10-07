@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import App.GamePanel;
 import Entity.Block;
-import GameState.PlayingState;
 
 public class MapFile {
 
@@ -30,13 +29,13 @@ public class MapFile {
 		    String[] types = line.split("!");
 		    Map.NB_BLOCK_X = Integer.parseInt(types[0]);
 		    Map.NB_BLOCK_Y = Integer.parseInt(types[1]);
-		    Map.BLOCK_SIZE = GamePanel.WIDTH/Map.NB_BLOCK_X;
-		    PlayingState.BLOCK_SIZE = Map.BLOCK_SIZE;
-			for (int i = 2; i < types.length; i++) {
+		    Map.BLOCK_SIZE_X = GamePanel.WIDTH/Map.NB_BLOCK_X;
+		    Map.BLOCK_SIZE_Y = GamePanel.HEIGHT/(Map.NB_BLOCK_Y+1);
+		    for (int i = 2; i < types.length; i++) {
 				int type = Integer.parseInt(types[i]);
 				int x = (i-2) % Map.NB_BLOCK_X;
 				int y = (i-2-x) / Map.NB_BLOCK_X;
-				Block block = new Block(x*Map.BLOCK_SIZE, y*Map.BLOCK_SIZE, Map.BLOCK_SIZE, Map.BLOCK_SIZE, type);
+				Block block = new Block(x*Map.BLOCK_SIZE_X, y*Map.BLOCK_SIZE_Y, Map.BLOCK_SIZE_X, Map.BLOCK_SIZE_Y, type);
 				blocks.add(block);
 			}
 			reader.close();

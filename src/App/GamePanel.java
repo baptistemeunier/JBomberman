@@ -35,6 +35,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private GamePanel() {
 		super();
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		WIDTH = (int) screenSize.getWidth();
+		HEIGHT = (int) screenSize.getHeight();
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();

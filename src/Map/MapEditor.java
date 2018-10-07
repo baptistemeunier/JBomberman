@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import App.GamePanel;
 import Entity.Block;
-import GameState.PlayingState;
 
 public class MapEditor {
 
@@ -25,11 +25,13 @@ public class MapEditor {
 	}
 	
 	public void initialize() {
+	    Map.BLOCK_SIZE_X = GamePanel.WIDTH/Map.NB_BLOCK_X;
+	    Map.BLOCK_SIZE_Y = GamePanel.HEIGHT/(Map.NB_BLOCK_Y+1);
 		Map.generateEmptyMap();
 		blockList = new ArrayList<Block>();
 		for(int i = 0; i < blocksTypes.length; i++) {
-			blockList.add(new Block(Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE+10, Map.NB_BLOCK_Y+PlayingState.BLOCK_SIZE*i+10*i, PlayingState.BLOCK_SIZE, PlayingState.BLOCK_SIZE, blocksTypes[i]));
-		}		
+			blockList.add(new Block(Map.NB_BLOCK_X*Map.BLOCK_SIZE_X+10, Map.NB_BLOCK_Y+Map.BLOCK_SIZE_Y*i+10*i, Map.BLOCK_SIZE_X, Map.BLOCK_SIZE_Y, blocksTypes[i]));
+		}
 	}
 
 	public void save() {

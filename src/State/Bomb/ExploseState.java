@@ -1,8 +1,8 @@
 package State.Bomb;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
+import Animation.ExplosionAnimation;
 import App.GamePanel;
 import Entity.Bomb;
 import Utils.BombCollision;
@@ -10,8 +10,8 @@ import Utils.Rectangle;
 
 public class ExploseState extends StateBomb {
 
-	private int frameBeforeDelete = GamePanel.FPS;
 	private BombCollision bombCollision;
+	private ExplosionAnimation animation;
 	
 	public ExploseState(Bomb bomb) {
 		super(bomb);
@@ -21,6 +21,7 @@ public class ExploseState extends StateBomb {
 	public void initialize() {
 		bombCollision = new BombCollision(bomb);
 		bombCollision.createCollisionBox();
+		animation = new ExplosionAnimation((int) (GamePanel.FPS * 0.7), bombCollision);
 	}
 
 	@Override
@@ -30,19 +31,15 @@ public class ExploseState extends StateBomb {
 
 	@Override
 	public void update() {
-		frameBeforeDelete--;
-		if(frameBeforeDelete == 0) {
+		animation.tic();
+		if(animation.isFinish()) {
 			bomb.markForRemove();
 		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		Rectangle[] rects = getCollisionBox();
-		for(Rectangle r : rects) {
-			g.setColor(Color.RED);
-			g.fillRect(r.x+10, r.y+10, r.width-20, r.height-20);			
-		}
+		animation.drawFrame(g);
 	}
 
 	public Rectangle[] getCollisionBox() {

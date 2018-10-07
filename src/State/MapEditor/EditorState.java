@@ -9,7 +9,6 @@ import java.util.Iterator;
 import App.EventBuffer;
 import App.GamePanel;
 import Entity.Block;
-import GameState.PlayingState;
 import Map.Map;
 import State.State;
 
@@ -33,7 +32,7 @@ public class EditorState extends BasicState {
 			int x = mEvent.getX();
 			int y = mEvent.getY();
 			if(x > GamePanel.WIDTH/2 && x < (GamePanel.WIDTH/2 + 170)
-					&&  y > Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE+20 && y < (Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE+20 + 40)) {
+					&&  y > Map.NB_BLOCK_Y*Map.BLOCK_SIZE_Y+20 && y < (Map.NB_BLOCK_Y*Map.BLOCK_SIZE_Y+20 + 40)) {
 				System.out.println("Created !!");
 				editor.save();
 				System.exit(0);
@@ -48,7 +47,7 @@ public class EditorState extends BasicState {
 					}
 				}
 			} else {
-				if(x >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
+				if(x >= Map.NB_BLOCK_X*Map.BLOCK_SIZE_X) {
 					Iterator<Block> it = editor.getBlockList().iterator();
 					while(it.hasNext()) {
 						Block b = it.next();
@@ -81,7 +80,7 @@ public class EditorState extends BasicState {
 		Font font = new Font("Arial",Font.BOLD,30);
 		g.setFont(font);
 
-		g.drawString("Save Map", GamePanel.WIDTH/2, Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE + 50);		
+		g.drawString("Save Map", GamePanel.WIDTH/2, Map.NB_BLOCK_Y*Map.BLOCK_SIZE_Y + 50);		
 		g.setFont(oldFont);			
 	}
 

@@ -8,15 +8,15 @@ import App.Game;
 import Entity.Block;
 import Entity.Player;
 import Entity.Bonus.*;
-import GameState.PlayingState;
 
 public class Map {
 
 	private static ArrayList<Block> blocks;
 	private static Game game;
-	public static int NB_BLOCK_X = 19;
-	public static int NB_BLOCK_Y = 13;
-	public static int BLOCK_SIZE = 50;
+	public static int NB_BLOCK_X;
+	public static int NB_BLOCK_Y;
+	public static int BLOCK_SIZE_X;
+	public static int BLOCK_SIZE_Y;
 
 	
 	/**
@@ -40,7 +40,7 @@ public class Map {
 		
 		for (int y = 0; y < NB_BLOCK_Y;y++) {
 			for (int x = 0; x < NB_BLOCK_X;x++) {
-				Block block = new Block(x*BLOCK_SIZE, y*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, Block.TYPE_EMPTY);
+				Block block = new Block(x*BLOCK_SIZE_X, y*BLOCK_SIZE_Y, BLOCK_SIZE_X, BLOCK_SIZE_Y, Block.TYPE_EMPTY);
 				blocks.add(block);
 			}
 		}
@@ -115,8 +115,8 @@ public class Map {
 	}
 
 	public static Block getBlockFromCoordinate(int x, int y) throws IndexOutOfBoundsException {
-		x = (int) x / PlayingState.BLOCK_SIZE;
-		y = (int) y / PlayingState.BLOCK_SIZE;
+		x = (int) x / Map.BLOCK_SIZE_X;
+		y = (int) y / Map.BLOCK_SIZE_Y;
 		if(x >= NB_BLOCK_X || y >= NB_BLOCK_Y) {
 			throw new IndexOutOfBoundsException();
 		}

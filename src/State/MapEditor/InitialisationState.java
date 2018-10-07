@@ -46,6 +46,8 @@ public class InitialisationState extends BasicState {
 		if(mEvent != null) {
 			if(mEvent.getY() > 570 && mEvent.getY() < 610) {
 				if(mEvent.getX() > 300 && mEvent.getX() < 520) {
+				    Map.NB_BLOCK_X = width;
+				    Map.NB_BLOCK_Y = height;
 					transition(new EditorState());
 				} else if(mEvent.getX() > 600 && mEvent.getX() < 680) {
 					System.out.println("Exit");
@@ -72,8 +74,6 @@ public class InitialisationState extends BasicState {
 				int key = ((KeyEvent) event).getKeyCode();
 				if(key == KeyEvent.VK_BACK_SPACE && name != null && name.length() > 0) {
 				        name = name.substring(0, name.length() - 1);
-				} else if(key == KeyEvent.VK_ENTER && name != null && name.length() > 0) {
-					editor.save();
 				} else {
 					char c = ((KeyEvent) event).getKeyChar();
 					name += c;

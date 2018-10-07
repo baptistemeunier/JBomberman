@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import App.GamePanel;
 import Entity.Bomb;
-import GameState.PlayingState;
+import Map.Map;
 import Utils.Rectangle;
 import Animation.BombAnimation;
 
@@ -49,7 +49,7 @@ public class WaitState extends StateBomb {
 		if(this.frameBeforeExplode > GamePanel.FPS * 1.7) {
 			return null;
 		}
-		Rectangle[] r = {new Rectangle(bomb.getCaseX()*PlayingState.BLOCK_SIZE+PlayingState.BLOCK_SIZE/4, bomb.getCaseY()*PlayingState.BLOCK_SIZE+PlayingState.BLOCK_SIZE/4, PlayingState.BLOCK_SIZE/2, PlayingState.BLOCK_SIZE/2)};
+		Rectangle[] r = {new Rectangle(bomb.getCaseX()*Map.BLOCK_SIZE_X+Map.BLOCK_SIZE_X/4, bomb.getCaseY()*Map.BLOCK_SIZE_Y+Map.BLOCK_SIZE_Y/4, Map.BLOCK_SIZE_Y/2, Map.BLOCK_SIZE_Y/2)};
 		return r;
 	}
 

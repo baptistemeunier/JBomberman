@@ -5,7 +5,6 @@ import Entity.Block;
 import Entity.Bomb;
 import Entity.Entity;
 import Entity.Player;
-import GameState.PlayingState;
 import Map.Map;
 
 public class CheckMove {
@@ -24,8 +23,8 @@ public class CheckMove {
 	}
 
 	public static void checkMoveRight(Player player) {
-		if(player.getX() + player.getWidth() >= Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE) {
-			player.setX(Map.NB_BLOCK_X*PlayingState.BLOCK_SIZE - player.getWidth());
+		if(player.getX() + player.getWidth() >= Map.NB_BLOCK_X*Map.BLOCK_SIZE_X) {
+			player.setX(Map.NB_BLOCK_X*Map.BLOCK_SIZE_X - player.getWidth());
 		} else {
 			Entity entity = Game.instance().checkCollision(player);
 			if(entity instanceof Block) {
@@ -52,8 +51,8 @@ public class CheckMove {
 	}
 	
 	public static void checkMoveDown(Player player) {
-		if(player.getY() + player.getHeight() >= Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE) {
-			player.setY(Map.NB_BLOCK_Y*PlayingState.BLOCK_SIZE - player.getHeight());
+		if(player.getY() + player.getHeight() >= Map.NB_BLOCK_Y*Map.BLOCK_SIZE_Y) {
+			player.setY(Map.NB_BLOCK_Y*Map.BLOCK_SIZE_Y - player.getHeight());
 		} else {
 			Entity entity = Game.instance().checkCollision(player);
 			if(entity instanceof Block) {
@@ -64,5 +63,4 @@ public class CheckMove {
 			}
 		}
 	}
-	
 }

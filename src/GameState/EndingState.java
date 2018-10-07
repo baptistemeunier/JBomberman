@@ -79,9 +79,9 @@ public class EndingState extends GameState {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		g.drawImage(lastFrame, 0, 0, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_X, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_Y, null ,null);
+		g.drawImage(lastFrame, 0, 0, Map.BLOCK_SIZE_X*Map.NB_BLOCK_X, Map.BLOCK_SIZE_Y*Map.NB_BLOCK_Y, null ,null);
 		g.setColor(new Color(12,12,12,130));
-		g.fillRect(0, 0, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_X, PlayingState.BLOCK_SIZE*Map.NB_BLOCK_Y);
+		g.fillRect(0, 0, Map.BLOCK_SIZE_X*Map.NB_BLOCK_X, Map.BLOCK_SIZE_Y*Map.NB_BLOCK_Y);
 
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Press Start", Font.PLAIN, 32));

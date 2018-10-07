@@ -2,8 +2,7 @@ package Entity;
 
 import java.awt.Graphics2D;
 
-import GameState.PlayingState;
-
+import Map.Map;
 
 /**
  * Class Entity
@@ -19,8 +18,8 @@ public abstract class Entity {
 	protected int caseY;
 
 	Entity(int x, int y) {
-		caseX = (int) x / PlayingState.BLOCK_SIZE;
-		caseY = (int) y / PlayingState.BLOCK_SIZE;
+		caseX = (int) x / Map.BLOCK_SIZE_X;
+		caseY = (int) y / Map.BLOCK_SIZE_Y;
 	}
 
 	/**

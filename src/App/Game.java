@@ -49,8 +49,8 @@ public class Game {
 	
 	public void createPlayers() {
 		// Create two player
-		players.add(new Player("Player 1", Map.BLOCK_SIZE + Map.BLOCK_SIZE/4, Map.BLOCK_SIZE + Map.BLOCK_SIZE/4));
-		players.add(new Player("Player 2", Map.BLOCK_SIZE*(Map.NB_BLOCK_X-2) + Map.BLOCK_SIZE/4, Map.BLOCK_SIZE*(Map.NB_BLOCK_Y-2) + Map.BLOCK_SIZE/4));
+		players.add(new Player("Player 1", Map.BLOCK_SIZE_X + Map.BLOCK_SIZE_X/4, Map.BLOCK_SIZE_Y + Map.BLOCK_SIZE_Y/4));
+		players.add(new Player("Player 2", Map.BLOCK_SIZE_X*(Map.NB_BLOCK_X-2) + Map.BLOCK_SIZE_X/4, Map.BLOCK_SIZE_Y*(Map.NB_BLOCK_Y-2) + Map.BLOCK_SIZE_Y/4));
 	}
 
 	public void update() {

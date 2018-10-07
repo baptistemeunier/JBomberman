@@ -30,8 +30,8 @@ public class Bomb extends Entity {
 		super(x, y);
 		this.range = player.getRange();
 		this.player = player;
-		this.x = caseX * Map.BLOCK_SIZE + Map.BLOCK_SIZE/4;
-		this.y = caseY * Map.BLOCK_SIZE + Map.BLOCK_SIZE/4;
+		this.x = caseX * Map.BLOCK_SIZE_X + Map.BLOCK_SIZE_X/4;
+		this.y = caseY * Map.BLOCK_SIZE_Y + Map.BLOCK_SIZE_Y/4;
 		state = new WaitState(this);
 		state.initialize();
 	}
